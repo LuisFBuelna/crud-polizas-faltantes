@@ -34,9 +34,6 @@ public class Empleado implements Serializable{
     private String puesto;
     
     
-    @Column(name = "polizas_cargadas", nullable = true)
-    private int polizasCargadas;
-    
     public Long getId() {
         return id;
     }
@@ -69,14 +66,6 @@ public class Empleado implements Serializable{
         this.puesto = puesto;
     }
 
-    public int getPolizasCargadas() {
-        return polizasCargadas;
-    }
-
-    public void setPolizasCargadas(int polizasCargadas) {
-        this.polizasCargadas = polizasCargadas;
-    }
-
     public Empleado() {
     }
 
@@ -85,7 +74,6 @@ public class Empleado implements Serializable{
         this.nombre = nombre;
         this.apellido = apellido;
         this.puesto = puesto;
-        this.polizasCargadas = polizasCargadas;
     }
 
     

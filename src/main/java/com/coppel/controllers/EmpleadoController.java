@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api/empleados")
+@RequestMapping("public/api/empleados")
 @RestController
 public class EmpleadoController {
     
@@ -24,7 +24,7 @@ public class EmpleadoController {
         return ResponseEntity.ok(empleadoService.getAllEmpleados());
     }
     
-    @PutMapping("/insertar")
+    @PutMapping("admin/insertar")
     private ResponseEntity<Empleado> insertarEmpleado(@RequestBody Empleado empleado){
         Empleado temporal = empleadoService.create(empleado);
         
@@ -35,7 +35,7 @@ public class EmpleadoController {
         }
     }
     
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("/admin/actualizar/{id}")
     private ResponseEntity<Empleado> guardarEmpleado(@RequestBody Empleado empleado){
         Empleado temporal = empleadoService.save(empleado);
         try{
@@ -45,7 +45,7 @@ public class EmpleadoController {
         }
     }
     
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/admin/eliminar/{id}")
     private ResponseEntity <Optional<Empleado>> eliminarEmpleado(@PathVariable Long id){
         return ResponseEntity.ok(empleadoService.deleteEmpleado(id));
     }  

@@ -28,6 +28,18 @@ public class Inventario implements Serializable {
     @NotNull
     @Column(name = "cantidad")
     private int cantidad;
+    
+    @NotNull
+    @Column(name = "precio")
+    private int precio;
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
 
     public Long getId() {
         return id;
