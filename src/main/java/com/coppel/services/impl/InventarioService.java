@@ -22,6 +22,10 @@ public class InventarioService {
         return inventarioRepository.save(inventario);
     }
     
+    public List<Inventario> obtenerInventario(){
+        return inventarioRepository.verInventario();
+    }
+    
     public List<Inventario> getAllInventario(){
         return inventarioRepository.findAll();
     }

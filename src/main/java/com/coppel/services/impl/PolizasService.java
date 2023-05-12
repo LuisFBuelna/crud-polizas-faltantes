@@ -2,10 +2,12 @@ package com.coppel.services.impl;
 
 import com.coppel.entities.Polizas;
 import com.coppel.repositories.PolizasRepository;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -39,5 +41,14 @@ public class PolizasService {
     
     public Optional<Polizas> finPolizaById (Long id){
         return polizaRepository.findById(id);
+    }
+
+    public ResponseEntity<Polizas> crearPoliza(int empleadoGenero, 
+            int sku, int cantidad, Date fecha){
+        return polizaRepository.insertarPoliza(empleadoGenero, sku, cantidad, fecha);
+    }
+    
+    public ResponseEntity<Polizas> eliminarPoliza(int id){
+        return polizaRepository.borrarPoliza(id);
     }
 }
