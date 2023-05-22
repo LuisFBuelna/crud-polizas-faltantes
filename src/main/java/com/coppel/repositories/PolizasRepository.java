@@ -21,4 +21,13 @@ public interface PolizasRepository extends JpaRepository<Polizas, Long>{
     
     @Query(value = "SELECT * FROM fun_eliminar_poliza(:id_poliza)", nativeQuery = true)
     public ResponseEntity<Polizas> borrarPoliza(@Param("id_poliza") int id);
+    
+    @Query(value = "SELECT * FROM fun_actualizar_poliza(:idpoliza, :empleadogenero, :sku, "
+            + ":cantidad, :fecha)", nativeQuery = true)
+    public ResponseEntity<Polizas> actualizarPoliza (
+            @Param("idpoliza") int id,
+            @Param("empleadogenero") int empleadoGenero,
+            @Param("sku") int sku,
+            @Param("cantidad") int cantidad,
+            @Param("fecha") Date fecha);
 }

@@ -147,7 +147,13 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.36</version>
             <type>jar</type>
+        </dependency>  
+        
+          <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+  
     </dependencies>
 
     <build>
