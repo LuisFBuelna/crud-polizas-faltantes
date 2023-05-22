@@ -51,4 +51,9 @@ public class PolizasService {
     public ResponseEntity<Polizas> eliminarPoliza(int id){
         return polizaRepository.borrarPoliza(id);
     }
+    
+    public ResponseEntity<Polizas> modificarPoliza(int id, int empleadoGenero, 
+            int sku, int cantidad, Date fecha){
+        return polizaRepository.actualizarPoliza(id, empleadoGenero, sku, cantidad, fecha);
+    }    
 }

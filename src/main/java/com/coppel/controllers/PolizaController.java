@@ -80,4 +80,19 @@ public class PolizaController {
         return ResponseEntity.status(HttpStatus.OK).build();
     } 
     
+    @PutMapping("/update")
+    private ResponseEntity<Polizas> updatePoliza(@RequestBody Polizas poliza){
+        try {
+            polizaService.modificarPoliza(
+                    poliza.getId(),
+                    poliza.getEmpleadoGenero(),
+                    poliza.getSku(),
+                    poliza.getCantidad(), 
+                    poliza.getFecha());
+        } catch (Exception e) {
+            return (ResponseEntity<Polizas>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(poliza);
+    }
+    
 }

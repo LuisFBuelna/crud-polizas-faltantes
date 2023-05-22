@@ -19,7 +19,7 @@ public class Polizas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idpoliza")
-    private Long id;
+    private int id;
     
     @NotNull
     @Column(name = "empleadogenero")
@@ -39,7 +39,7 @@ public class Polizas {
     public Polizas() {
     }
 
-    public Polizas(Long id, int empleadoGenero, int sku, int cantidad, Date fecha) {
+    public Polizas(int id, int empleadoGenero, int sku, int cantidad, Date fecha) {
         this.id = id;
         this.empleadoGenero = empleadoGenero;
         this.sku = sku;
@@ -49,11 +49,11 @@ public class Polizas {
     
     
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
