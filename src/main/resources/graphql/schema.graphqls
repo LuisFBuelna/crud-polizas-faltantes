@@ -1,0 +1,24 @@
+type Query{
+    allPolizas: [Polizas]
+}
+
+type Polizas{
+    id: ID!
+    empleadoGenero: Int
+    sku: Int
+    cantidad: Int
+    fecha: String
+}
+
+type Inventario{
+    id: ID!
+    nombre: String
+    cantidad: Int
+}
+
+type Empleado{
+    id: ID!
+    nombre: String
+    apellido: String
+    puesto: String
+}

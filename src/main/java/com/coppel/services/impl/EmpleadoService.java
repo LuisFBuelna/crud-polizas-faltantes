@@ -41,4 +41,7 @@ public class EmpleadoService {
         return empleadoRepository.findById(id);
     }
     
+    public Empleado findEmpleadoById2 (Long id){
+        return empleadoRepository.getById(id);
+    }
 }

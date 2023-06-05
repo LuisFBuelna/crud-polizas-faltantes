@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -56,4 +57,14 @@ public class PolizasService {
             int sku, int cantidad, Date fecha){
         return polizaRepository.actualizarPoliza(id, empleadoGenero, sku, cantidad, fecha);
     }    
+    
+    public Optional<Polizas> findPolizaById (int id){
+        return polizaRepository.findPolizaById(id);
+    }
+    
+    @QueryMapping
+    public List<Polizas> allPolizas(){
+        System.out.println("ENTRANDO A ALLPOLIZAS GRAPHQL");
+        return polizaRepository.findAll();
+    }
 }
