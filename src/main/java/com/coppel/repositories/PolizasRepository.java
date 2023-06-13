@@ -2,6 +2,7 @@ package com.coppel.repositories;
 
 import com.coppel.entities.Polizas;
 import java.sql.Date;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +31,8 @@ public interface PolizasRepository extends JpaRepository<Polizas, Long>{
             @Param("sku") int sku,
             @Param("cantidad") int cantidad,
             @Param("fecha") Date fecha);
+    
+    @Query(value = "SELECT * FROM polizas where id_poliza = :id_poliza", nativeQuery = true)
+    public Optional<Polizas> findPolizaById (@Param("id_poliza") int id);
+    
 }
