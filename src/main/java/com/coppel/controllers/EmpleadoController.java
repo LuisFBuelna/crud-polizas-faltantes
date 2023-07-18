@@ -49,7 +49,11 @@ public class EmpleadoController {
     
     @DeleteMapping("/eliminar/{id}")
     private ResponseEntity <Optional<Empleado>> eliminarEmpleado(@PathVariable Long id){
-        return ResponseEntity.ok(empleadoService.deleteEmpleado(id));
+        try {
+            empleadoService.deleteEmpleado(id);
+        } catch (Exception ex){
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }  
     
     @GetMapping("/{id}")

@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface PolizasRepository extends JpaRepository<Polizas, Long>{
    
-    @Query(value = "SELECT * FROM fun_insertar_poliza(:empleadogenero, :sku, "
+    @Query(value = "SELECT FROM fun_insertar_poliza(:empleadogenero, :sku, "
             + ":cantidad, :fecha)", nativeQuery = true)
     public ResponseEntity<Polizas> insertarPoliza(
             @Param("empleadogenero")int empleadoGenero,
@@ -20,10 +20,10 @@ public interface PolizasRepository extends JpaRepository<Polizas, Long>{
             @Param("cantidad")int cantidad, 
             @Param("fecha")Date fecha);
     
-    @Query(value = "SELECT * FROM fun_eliminar_poliza(:id_poliza)", nativeQuery = true)
+    @Query(value = "SELECT FROM fun_eliminar_poliza(:id_poliza)", nativeQuery = true)
     public ResponseEntity<Polizas> borrarPoliza(@Param("id_poliza") int id);
     
-    @Query(value = "SELECT * FROM fun_actualizar_poliza(:idpoliza, :empleadogenero, :sku, "
+    @Query(value = "SELECT FROM fun_actualizar_poliza(:idpoliza, :empleadogenero, :sku, "
             + ":cantidad, :fecha)", nativeQuery = true)
     public ResponseEntity<Polizas> actualizarPoliza (
             @Param("idpoliza") int id,

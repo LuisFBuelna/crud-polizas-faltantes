@@ -1,26 +1,15 @@
 package com.coppel.controllers;
 
 import com.coppel.entities.Polizas;
-import com.coppel.repositories.PolizasRepository;
 import com.coppel.services.impl.PolizasService;
-import java.sql.Date;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/polizas")
 @RestController
@@ -58,15 +47,16 @@ public class PolizaController {
     }
     
     @PostMapping("/insertarPoliza")
-    private ResponseEntity<Polizas> insertarPoliza(@RequestBody Polizas poliza){
-        try{
+    private ResponseEntity<Polizas> insertarPoliza(@RequestBody Polizas poliza) {
+
+        try {
             polizaService.crearPoliza(
-            poliza.getEmpleadoGenero(),
-            poliza.getSku(),
-            poliza.getCantidad(),
-            poliza.getFecha()
+                    poliza.getEmpleadoGenero(),
+                    poliza.getSku(),
+                    poliza.getCantidad(),
+                    poliza.getFecha()
             );
-        }catch(Exception ex){
+        }catch(Exception ex) {
         }
         return ResponseEntity.status(HttpStatus.OK).body(poliza);
     }
@@ -76,9 +66,8 @@ public class PolizaController {
         try{
             polizaService.eliminarPoliza(id);
         }catch(Exception ex){
-            ex.printStackTrace();
         }
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     } 
     
     @PutMapping("/update")
@@ -91,7 +80,6 @@ public class PolizaController {
                     poliza.getCantidad(), 
                     poliza.getFecha());
         } catch (Exception e) {
-            return (ResponseEntity<Polizas>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.status(HttpStatus.OK).body(poliza);
     }

@@ -54,7 +54,12 @@ public class InventarioController {
 
     @DeleteMapping("/eliminar/{id}")
     private ResponseEntity eliminarArticulo(@PathVariable Long id){
-        return ResponseEntity.ok(inventarioService.deleteInventario(id));
+         try {
+             inventarioService.deleteInventario(id);
+         } catch (Exception ex){
+
+         }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
     @GetMapping("/{id}")

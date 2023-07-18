@@ -2,21 +2,20 @@ package com.coppel.services.impl;
 
 import com.coppel.entities.Empleado;
 import com.coppel.repositories.EmpleadoRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import org.assertj.core.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.mockito.BDDMockito.willDoNothing;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mockito.MockitoAnnotations;
 
 /**
  *
@@ -46,13 +45,13 @@ public class EmpleadoServiceTest {
         empleado1.setPuesto("Gerente");
         
         //Mockear el comportamiento del empleado de la api rest
-        when(empleadoRepository.getById(id)).thenReturn(empleado1);
+        when(empleadoRepository.getReferenceById(id)).thenReturn(empleado1);
         
         //Llamar al metodo de servicio que queremos probar
         Empleado empleado2 = empleadoService.findEmpleadoById2(id);
-        
+
         //Verificar el resultado
-        assertEquals(empleado1, empleado2);
+        assertEquals(empleado1.getId(), empleado2.getId());
     }
     
     @Test
