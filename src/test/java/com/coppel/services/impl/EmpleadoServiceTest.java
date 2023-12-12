@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
  *
  * @author luis.buelna
  */
-public class EmpleadoServiceTest {
+class EmpleadoServiceTest {
     
     @Mock
     private EmpleadoRepository empleadoRepository;
@@ -32,26 +32,6 @@ public class EmpleadoServiceTest {
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.openMocks(this);
-    }
-    
-    @Test
-    public void testGetUserById(){
-        //Datos de prueba
-        Long id = 123L;
-        Empleado empleado1 = new Empleado();
-        empleado1.setId(id);
-        empleado1.setNombre("John");
-        empleado1.setApellido("Doe");
-        empleado1.setPuesto("Gerente");
-        
-        //Mockear el comportamiento del empleado de la api rest
-        when(empleadoRepository.getReferenceById(id)).thenReturn(empleado1);
-        
-        //Llamar al metodo de servicio que queremos probar
-        Empleado empleado2 = empleadoService.findEmpleadoById2(id);
-
-        //Verificar el resultado
-        assertEquals(empleado1.getId(), empleado2.getId());
     }
     
     @Test

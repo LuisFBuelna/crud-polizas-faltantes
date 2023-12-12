@@ -1,8 +1,15 @@
 package com.coppel.controllers;
 
 import com.coppel.entities.Polizas;
+import com.coppel.exceptions.IncorrectBodyException;
+import com.coppel.exceptions.NotFoundException;
 import com.coppel.services.impl.PolizasService;
+import org.aspectj.weaver.ast.Not;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConverterNotFoundException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,7 +21,9 @@ import java.util.Optional;
 @RequestMapping("/polizas")
 @RestController
 public class PolizaController {
-    
+
+    private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
@@ -22,65 +31,100 @@ public class PolizaController {
     private PolizasService polizaService;
     
     @GetMapping
-    private ResponseEntity <List<Polizas>> listarTodasLasPolizas(){
+    public ResponseEntity <List<Polizas>> listarTodasLasPolizas(){
+        log.info("Obteniendo lista de polizas");
         return ResponseEntity.ok(polizaService.getAllPolizas());
     }
     
     @PutMapping("/actualizar/{id}")
-    private ResponseEntity<Polizas> guardarPoliza(@RequestBody Polizas poliza){
+    public ResponseEntity<Polizas> guardarPoliza(@RequestBody Polizas poliza){
         Polizas temporal = polizaService.save(poliza);
         try{
             return ResponseEntity.ok(temporal);
-        }catch(Exception e){
+        }catch(IncorrectBodyException ex){
+            throw ex;
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
     
     @DeleteMapping("/eliminar/{id}")
-    private ResponseEntity <Optional<Polizas>> eliminarPoliza(@PathVariable Long id){
-        return ResponseEntity.ok(polizaService.deletePoliza(id));
+    public ResponseEntity <Optional<Polizas>> eliminarPoliza(@PathVariable Long id){
+        log.info("Entrando a endpoint eliminarPoliza con JPA");
+        Optional<Polizas> eliminar = polizaService.deletePoliza(id);
+        try {
+            log.info("Poliza eliminada");
+            return ResponseEntity.ok(eliminar);
+        } catch (NotFoundException ex) {
+            log.info("Ha ocurrido un NotFoundException en eliminarPoliza");
+            throw ex;
+        }
     }
     
     @GetMapping("/{id}")
-    private ResponseEntity <Optional<Polizas>> ListarPolizaPorId(@PathVariable("id") Long id){
-        return ResponseEntity.ok(polizaService.finPolizaById(id));
+    public ResponseEntity <Optional<Polizas>> listarPolizaPorId(@PathVariable("id") Long id){
+        log.info("Entrando a endpoint listarPolizaPorId");
+        Optional<Polizas> encontrar = polizaService.finPolizaById(id);
+        try {
+            log.info("Retornando poliza encontrada por id");
+            return ResponseEntity.ok(polizaService.finPolizaById(id));
+        } catch (NotFoundException ex) {
+            throw ex;
+        }
     }
     
     @PostMapping("/insertarPoliza")
-    private ResponseEntity<Polizas> insertarPoliza(@RequestBody Polizas poliza) {
-
+    public ResponseEntity<Polizas> insertarPoliza(@RequestBody Polizas poliza) {
+        log.info("Entrando a endpoint insertarPoliza");
         try {
-            polizaService.crearPoliza(
-                    poliza.getEmpleadoGenero(),
-                    poliza.getSku(),
-                    poliza.getCantidad(),
-                    poliza.getFecha()
-            );
-        }catch(Exception ex) {
+            Polizas polizaTemporal = polizaService.crearPoliza(poliza);
+            log.info("Retornando la poliza creada");
+            return ResponseEntity.status(HttpStatus.OK).body(polizaTemporal);
+        } catch (IncorrectBodyException ex) {
+            log.info("Ha ocurrido un IncorrectBodyException");
+            throw ex;
         }
-        return ResponseEntity.status(HttpStatus.OK).body(poliza);
+          catch(Exception ex) {
+            log.info("Ha ocurrido una Exception");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
     
     @DeleteMapping("/delete/{id}")
-    private ResponseEntity<Polizas> deletePoliza(@PathVariable int id){
+    public ResponseEntity<HttpStatus> deletePoliza(@PathVariable int id) throws Exception {
+        log.info("Entrando a endpoint deletePoliza");
         try{
             polizaService.eliminarPoliza(id);
-        }catch(Exception ex){
+        } catch (ConverterNotFoundException ex) {
+            log.info("Ha ocurrido una ConverterNotFoundException");
+            throw ex;
+        } catch (NotFoundException ex) {
+            log.info("Ha ocurrido una NotFoundException");
+            throw  ex;
+        } catch (DataAccessException ex) {
+            log.info("Ha ocurrido una DataAccessException");
+            throw ex;
+        } catch (Exception ex) {
+            log.info("Ha ocurrido una Exception");
+            return (ResponseEntity<HttpStatus>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        log.info("Poliza eliminada correctamente");
+        return ResponseEntity.status(HttpStatus.OK).build();
     } 
     
     @PutMapping("/update")
-    private ResponseEntity<Polizas> updatePoliza(@RequestBody Polizas poliza){
+    public ResponseEntity<Polizas> updatePoliza(@RequestBody Polizas poliza){
+        log.info("Entrando a endpoint updatePoliza");
         try {
-            polizaService.modificarPoliza(
-                    poliza.getId(),
-                    poliza.getEmpleadoGenero(),
-                    poliza.getSku(),
-                    poliza.getCantidad(), 
-                    poliza.getFecha());
-        } catch (Exception e) {
+            polizaService.modificarPoliza(poliza);
+        } catch (NotFoundException ex) {
+            log.info("Ha ocurrido una DataAccessException");
+            throw ex;
+        } catch (Exception ex) {
+            log.info("Ha ocurrido una Exception");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+        log.info("Retornando poliza modificada");
         return ResponseEntity.status(HttpStatus.OK).body(poliza);
     }
     
