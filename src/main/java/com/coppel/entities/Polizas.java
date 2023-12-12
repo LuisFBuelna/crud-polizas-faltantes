@@ -1,22 +1,20 @@
 package com.coppel.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.sql.Date;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+
+import java.sql.Date;
 
 @Builder
+@Data
+@AllArgsConstructor
 @Entity
 @Table(name = "polizas")
 public class Polizas {
 
-   // private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +23,7 @@ public class Polizas {
     
     @NotNull
     @Column(name = "empleadogenero")
-    private int empleadoGenero;
+    private Integer empleadoGenero;
 
     @NotNull
     @Column(name = "sku")
