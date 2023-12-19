@@ -30,7 +30,7 @@ public class InventarioService {
 
     public Inventario create(Inventario inventario){
         Inventario inventario1 = inventarioRepository.save(inventario);
-            if (isString(inventario)) {
+            if (!isString(inventario)) {
                 throw new IllegalArgumentException("Los parametros proporcionados son incorrectos");
             }
             if (inventario == null) {

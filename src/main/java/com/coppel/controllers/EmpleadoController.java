@@ -11,7 +11,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import lombok.AllArgsConstructor;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +42,9 @@ public class EmpleadoController {
 
     @PostMapping("/insertar")
     public ResponseEntity<Empleado> insertarEmpleado(@Valid @RequestBody Empleado empleado) {
-        Empleado temporal = empleadoService.create(empleado);
-
         try {
-            return ResponseEntity.created(new URI("/api/empleados" + temporal.getId())).body(temporal);
+            empleadoService.create(empleado);
+            return ResponseEntity.created(new URI("/api/empleados" + empleado.getId())).body(empleado);
         } catch (IncorrectBodyException ex) {
             throw ex;
         } catch (URISyntaxException e) {
@@ -55,7 +53,7 @@ public class EmpleadoController {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Empleado> guardarEmpleado(@PathVariable Long id, @RequestBody Empleado empleado) {
+    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado empleado) {
         Empleado temporal = null;
         try {
             temporal = empleadoService.save(empleado);

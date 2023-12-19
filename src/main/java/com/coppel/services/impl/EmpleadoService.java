@@ -35,9 +35,6 @@ public class EmpleadoService {
 
     public Empleado save(Empleado empleado) {
         Empleado empleado1 = empleadoRepository.save(empleado);
-        if (isString(empleado)) {
-            throw new IllegalArgumentException("Los parametros proporcionados son incorrectos");
-        }
         if (empleado == null) {
             throw new IncorrectBodyException("El empleado no se pudo modificar correctamente");
         }
