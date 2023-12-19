@@ -75,5 +75,9 @@ public class Empleado implements Serializable{
         this.puesto = puesto;
     }
 
-    
+    public Empleado(String nombre, String apellido, String puesto) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.puesto = puesto;
     }
+}

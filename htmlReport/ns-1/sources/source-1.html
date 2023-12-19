@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > EmpleadoController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.coppel.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: EmpleadoController (com.coppel.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EmpleadoController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    45.2%
+  </span>
+  <span class="absValue">
+    (14/31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.coppel.controllers;
+&nbsp;
+&nbsp;import com.coppel.entities.Empleado;
+&nbsp;import com.coppel.exceptions.IncorrectBodyException;
+&nbsp;import com.coppel.exceptions.NotFoundException;
+&nbsp;import com.coppel.services.impl.EmpleadoService;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;
+&nbsp;import java.net.URI;
+&nbsp;import java.net.URISyntaxException;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import org.slf4j.ILoggerFactory;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.springframework.web.bind.annotation.RequestMapping;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;
+&nbsp;@RequestMapping(&quot;/empleados&quot;)
+&nbsp;@RestController
+&nbsp;public class EmpleadoController {
+&nbsp;
+<b class="fc">&nbsp;    private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private EmpleadoService empleadoService;
+&nbsp;
+<b class="fc">&nbsp;    public EmpleadoController(EmpleadoService empleadoService) {</b>
+<b class="fc">&nbsp;        this.empleadoService = empleadoService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public ResponseEntity&lt;List&lt;Empleado&gt;&gt; listarTodosLosEmpleados() {
+<b class="fc">&nbsp;        log.info(&quot;Obteniendo la lista de empleados&quot;);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(empleadoService.getAllEmpleados());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/insertar&quot;)
+&nbsp;    public ResponseEntity&lt;Empleado&gt; insertarEmpleado(@Valid @RequestBody Empleado empleado) {
+&nbsp;        //Empleado temporal = empleadoService.create(empleado);
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            empleadoService.create(empleado);</b>
+<b class="fc">&nbsp;            return ResponseEntity.created(new URI(&quot;/api/empleados&quot; + empleado.getId())).body(empleado);</b>
+<b class="nc">&nbsp;        } catch (IncorrectBodyException ex) {</b>
+<b class="nc">&nbsp;            throw ex;</b>
+<b class="nc">&nbsp;        } catch (URISyntaxException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/actualizar/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Empleado&gt; actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado empleado) {
+<b class="fc">&nbsp;        Empleado temporal = null;</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            temporal = empleadoService.save(empleado);</b>
+<b class="nc">&nbsp;        } catch (IllegalArgumentException ex) {</b>
+<b class="nc">&nbsp;            throw ex;</b>
+<b class="nc">&nbsp;        } catch (IncorrectBodyException ex) {</b>
+<b class="nc">&nbsp;            throw ex;</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(temporal);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/eliminar/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Optional&lt;Empleado&gt;&gt; eliminarEmpleado(@PathVariable Long id) {
+&nbsp;        try {
+<b class="nc">&nbsp;            empleadoService.deleteEmpleado(id);</b>
+<b class="nc">&nbsp;        } catch (NotFoundException ex) {</b>
+<b class="nc">&nbsp;            throw ex;</b>
+&nbsp;        }
+<b class="nc">&nbsp;          catch (Exception ex) {</b>
+<b class="nc">&nbsp;            ex.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Optional&lt;Empleado&gt;&gt; listarEmpleadoPorId(@PathVariable(&quot;id&quot;) Long id) {
+&nbsp;        ResponseEntity&lt;Optional&lt;Empleado&gt;&gt; empleado;
+&nbsp;        try {
+<b class="fc">&nbsp;            empleado = ResponseEntity.ok(empleadoService.findEmpleadoById(id));</b>
+<b class="nc">&nbsp;        } catch (NotFoundException ex) {</b>
+<b class="nc">&nbsp;            throw ex;</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return empleado;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;    
+&nbsp;    
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-18 16:49</div>
+</div>
+</body>
+</html>
