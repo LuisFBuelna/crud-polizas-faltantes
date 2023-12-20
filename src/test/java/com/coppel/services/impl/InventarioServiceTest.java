@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 /**
@@ -69,7 +70,7 @@ public class InventarioServiceTest {
         assertEquals(inventarioInsert.getCantidad(), inventarioResult.getCantidad());
         
         //Verificar que se haya llamado al metodo save del repositorio
-        verify(inventarioRepository).save(inventarioInsert);
+        verify(inventarioRepository, Mockito.times(2)).save(inventarioInsert);
     }
     
     @Test
