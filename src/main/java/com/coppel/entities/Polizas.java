@@ -34,20 +34,25 @@ public class Polizas {
     private int cantidad;
 
     @Column(name = "fecha")
-    private Date fecha;
+    private String fecha;
     
     public Polizas() {
     }
 
-    public Polizas(int id, int empleadoGenero, int sku, int cantidad, Date fecha) {
+    public Polizas(int id, int empleadoGenero, int sku, int cantidad, String fecha) {
         this.id = id;
         this.empleadoGenero = empleadoGenero;
         this.sku = sku;
         this.cantidad = cantidad;
         this.fecha = fecha;
     }
-    
-    
+
+    public Polizas(Integer empleadoGenero, int sku, int cantidad, String fecha) {
+        this.empleadoGenero = empleadoGenero;
+        this.sku = sku;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+    }
 
     public int getId() {
         return id;
@@ -81,11 +86,11 @@ public class Polizas {
         this.cantidad = cantidad;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

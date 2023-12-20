@@ -5,6 +5,8 @@ import com.coppel.entities.Polizas;
 import com.coppel.exceptions.IncorrectBodyException;
 import com.coppel.exceptions.NotFoundException;
 import com.coppel.repositories.PolizasRepository;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,12 +76,14 @@ public class PolizasService {
 
     public Polizas crearPoliza(Polizas poliza){
         log.info("Creando poliza desde capa servicio");
+        Date fechaDate = Date.valueOf(poliza.getFecha());
+
         Polizas polizaTemporal =
                 polizaRepository.insertarPoliza(
                 poliza.getEmpleadoGenero(),
                 poliza.getSku(),
                 poliza.getCantidad(),
-                poliza.getFecha());
+                fechaDate);
         if (polizaTemporal != null) {
             log.info("Poliza creada");
             return polizaTemporal;
@@ -108,10 +112,11 @@ public class PolizasService {
     
     public Polizas modificarPoliza(@RequestBody Polizas poliza){
         log.info("Entrando a modificarPoliza en capa de servicio");
+        Date fechaDate = Date.valueOf(poliza.getFecha());
         try{
             Polizas polizaTemporal = polizaRepository.actualizarPoliza(poliza.getId(),
                     poliza.getEmpleadoGenero(), poliza.getSku(),
-                    poliza.getCantidad(), poliza.getFecha());
+                    poliza.getCantidad(), fechaDate);
 
             log.info("Poliza modificada");
             return polizaTemporal;

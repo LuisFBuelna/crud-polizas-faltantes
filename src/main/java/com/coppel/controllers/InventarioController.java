@@ -73,7 +73,7 @@ public class InventarioController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        return (ResponseEntity<Inventario>) ResponseEntity.status(HttpStatus.CREATED);
+        return (ResponseEntity<Inventario>) ResponseEntity.status(HttpStatus.OK);
     }
 
     @DeleteMapping("/eliminar/{id}")
@@ -99,7 +99,7 @@ public class InventarioController {
         Optional<Inventario> inventario = inventarioService.finInventarioById(id);
         try {
             log.info("Retornando articulo encontrado por id");
-            return ResponseEntity.ok(inventarioService.finInventarioById(id));
+            return ResponseEntity.ok(inventario);
         } catch (NotFoundException ex) {
             log.info("Ha ocurrido un NotFoundException");
             throw ex;
@@ -107,7 +107,7 @@ public class InventarioController {
     }
 
     @GetMapping("/verinventario")
-    public ResponseEntity<List<Inventario>> restarInventario() {
+    public ResponseEntity<List<Inventario>> obtenerInventario() {
         return ResponseEntity.ok(inventarioService.obtenerInventario());
     }
 
