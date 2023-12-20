@@ -37,7 +37,7 @@ public class PolizasServiceTest {
         polizaXId.setEmpleadoGenero(3);
         polizaXId.setSku(100);
         polizaXId.setCantidad(25);
-        polizaXId.setFecha(Date.valueOf(LocalDate.now()));
+        polizaXId.setFecha(String.valueOf(LocalDate.now()));
         Optional<Polizas> optionalPolizaId = Optional.of(polizaXId);
         
         when(polizasRepository.findById(Long.MIN_VALUE));
