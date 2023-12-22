@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -106,11 +107,11 @@ class EmpleadoServiceTest {
         
     }
     
-    //@Test
-    /*public void testDeleteEmpleado(){
+    @Test
+    public void testDeleteEmpleado(){
         //Datos de prueba
         Long empleadoId = 1L;
-        Empleado empleadoD = new Empleado(2L, "Raul", "Bastidas", "Almacen");
+        Empleado empleadoD = new Empleado(1L, "Raul", "Bastidas", "Almacen");
         
         //Mockear el comportamiento del repositorio
         when(empleadoRepository.findById(empleadoD.getId())).thenReturn(Optional.of(empleadoD));
@@ -119,8 +120,7 @@ class EmpleadoServiceTest {
         empleadoService.deleteEmpleado(empleadoId);
         
         //Verificar que se haya llamado al metodo deleteById del repositorio
-        verify(empleadoService).deleteEmpleado(empleadoId);
-        //assertEquals(Optional.of(empleadoId), empleadoD);
-        //verify(empleadoService, Mockito.times(1)).deleteEmpleado(empleadoId);
-    }*/
+        verify(empleadoRepository).findById(empleadoId);
+        assertEquals(empleadoId, empleadoD.getId());
+    }
 }
