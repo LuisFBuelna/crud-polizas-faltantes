@@ -1,9 +1,11 @@
 package com.coppel.exceptions;
 
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.constraints.Min;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -70,6 +72,15 @@ public class PolizasExceptionHandler {
     public ResponseEntity<DTOException> handleGlobalException(ConstraintViolationException e) {
         DTOException exception = new DTOException(
                 e.getMessage(),
+                HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ResponseEntity<DTOException> InvalidParam(MethodArgumentNotValidException e) {
+        DTOException exception = new DTOException(
+                e.getBody().getDetail(),
                 HttpStatus.BAD_REQUEST);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);

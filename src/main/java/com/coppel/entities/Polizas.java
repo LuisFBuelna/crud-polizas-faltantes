@@ -34,6 +34,7 @@ public class Polizas {
     @Column(name = "cantidad")
     private int cantidad;
 
+    @NotNull
     @Column(name = "fecha")
     private String fecha;
     
@@ -94,7 +95,4 @@ public class Polizas {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-
-    
-
 }

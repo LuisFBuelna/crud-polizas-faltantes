@@ -1,5 +1,6 @@
 package com.coppel.repositories;
 
+import com.coppel.dto.PolizaDTO;
 import com.coppel.entities.Polizas;
 import java.sql.Date;
 import java.util.Optional;
