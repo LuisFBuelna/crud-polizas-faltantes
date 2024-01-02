@@ -1,5 +1,6 @@
 package com.coppel.controllers;
 
+import com.coppel.dto.PolizaDTO;
 import com.coppel.entities.Polizas;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -17,6 +18,8 @@ import java.time.LocalDate;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -56,9 +59,19 @@ class PolizaControllerTest {
     }
 
     @Test
+    void listarPolizaPorIdNotFoundException() throws Exception {
+
+        ResultActions response = mockMvc.perform(get("/polizas/{id}", 2130));
+
+        response.andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     void insertarPoliza() throws Exception {
 
-        Polizas polizaInsertar = new Polizas(2, 7, 5, String.valueOf(LocalDate.now()));
+        PolizaDTO polizaInsertar = new PolizaDTO(2, 7, 5, String.valueOf(LocalDate.now()));
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
@@ -72,7 +85,7 @@ class PolizaControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.empleadoGenero").value(polizaInsertar.getEmpleadoGenero()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.empleado").value(polizaInsertar.getEmpleado()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cantidad").value(polizaInsertar.getCantidad()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.fecha").value(polizaInsertar.getFecha()));
     }
@@ -80,7 +93,7 @@ class PolizaControllerTest {
     @Test
     void updatePoliza() throws Exception {
 
-        Polizas polizaUpdate = new Polizas(27,2, 7, 10, String.valueOf(LocalDate.now()));
+        PolizaDTO polizaUpdate = new PolizaDTO(27,2, 7, 10, String.valueOf(LocalDate.now()));
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
@@ -94,7 +107,7 @@ class PolizaControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.empleadoGenero").value(polizaUpdate.getEmpleadoGenero()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.empleado").value(polizaUpdate.getEmpleado()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cantidad").value(polizaUpdate.getCantidad()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.fecha").value(polizaUpdate.getFecha()));
     }
@@ -102,7 +115,7 @@ class PolizaControllerTest {
     @Test
     void deletePoliza() throws Exception {
 
-        ResultActions response = mockMvc.perform(delete("/polizas/delete/{id}", 28));
+        ResultActions response = mockMvc.perform(delete("/polizas/delete/{id}", 73));
 
         response.andDo(print())
                 .andExpect(status().isOk());

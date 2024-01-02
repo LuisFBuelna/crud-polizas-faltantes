@@ -21,5 +21,4 @@ public class JsonResponse {
             this.status = status;
         }
     }
-
 }

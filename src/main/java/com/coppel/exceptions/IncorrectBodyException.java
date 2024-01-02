@@ -9,7 +9,7 @@ public class IncorrectBodyException extends RuntimeException{
         super(message, cause);
     }
 
-    public IncorrectBodyException(String message, Exception ex){
+    public IncorrectBodyException(String message, RuntimeException ex){
         super(message, ex);
     }
 }

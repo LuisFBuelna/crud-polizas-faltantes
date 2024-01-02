@@ -89,7 +89,7 @@ class InventarioControllerTest {
     @Test
     void eliminarArticulo() throws Exception {
 
-        ResultActions response = mockMvc.perform(delete("/inventario/eliminar/{id}", 23));
+        ResultActions response = mockMvc.perform(delete("/inventario/eliminar/{id}", 31));
 
         response.andExpect(MockMvcResultMatchers.status().isOk());
 
