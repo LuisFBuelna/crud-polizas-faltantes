@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "articulo")
@@ -31,4 +30,15 @@ public class Articulo {
     @NotNull
     @Column(name = "precio")
     private int precio;
+
+    public Articulo() {
+    }
+
+    public Articulo(Long id, Long sku, String nombre, String descripcion, int precio) {
+        this.id = id;
+        this.sku = sku;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+    }
 }
