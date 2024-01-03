@@ -57,8 +57,8 @@ public class InventarioController {
         if (temporal.isPresent()) {
             try {
                 Inventario inventarioTemporal = temporal.get();
-                inventarioTemporal.setNombre(inventario.getNombre());
                 inventarioTemporal.setCantidad(inventario.getCantidad());
+                inventarioTemporal.setIdArticulo(inventario.getIdArticulo());
                 Inventario updatedInventario = inventarioService.save(inventarioTemporal);
                 log.info("Retornando articulo modificado");
                 return ResponseEntity.ok(updatedInventario);

@@ -35,7 +35,7 @@ public class PolizasServiceTest {
         Polizas polizaXId = new Polizas();
         polizaXId.setId(id);
         polizaXId.setEmpleadoGenero(3);
-        polizaXId.setSku(100);
+        polizaXId.setIdInventario(1);
         polizaXId.setCantidad(25);
         polizaXId.setFecha(String.valueOf(LocalDate.now()));
         Optional<Polizas> optionalPolizaId = Optional.of(polizaXId);

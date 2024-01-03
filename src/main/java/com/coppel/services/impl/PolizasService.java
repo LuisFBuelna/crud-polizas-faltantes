@@ -63,7 +63,7 @@ public class PolizasService {
         try {
             polizaRepo = polizaRepository.insertarPoliza(
                     polizaDTO.getEmpleado(),
-                    polizaDTO.getSku(),
+                    polizaDTO.getIdInventario(),
                     polizaDTO.getCantidad(),
                     Date.valueOf(polizaDTO.getFecha()));
 
@@ -103,7 +103,7 @@ public class PolizasService {
         log.info("Entrando a modificarPoliza en capa de servicio");
         try {
             Polizas polizaTemporal = polizaRepository.actualizarPoliza(polizaDTO.getId(),
-                    polizaDTO.getEmpleado(), polizaDTO.getSku(),
+                    polizaDTO.getEmpleado(), polizaDTO.getIdInventario(),
                     polizaDTO.getCantidad(), Date.valueOf(polizaDTO.getFecha()));
 
             PolizaDTO polizaMapeada = PolizaMapper.mapper.polizaToPolizaDto(polizaTemporal);

@@ -18,7 +18,7 @@ public class PolizaDTO {
     private int empleado;
 
     @NotNull(message = "El sku no puede ser nulo")
-    private int sku;
+    private int idInventario;
 
     @Min(value = 1, message = "La cantidad no puede ser menor a 1")
     private int cantidad;
@@ -27,9 +27,9 @@ public class PolizaDTO {
     @NotNull(message = "La fecha no puede ser nulo")
     private String fecha;
 
-    public PolizaDTO(int empleado, int sku, int cantidad, String fecha) {
+    public PolizaDTO(int empleado, int idInventario, int cantidad, String fecha) {
         this.empleado = empleado;
-        this.sku = sku;
+        this.idInventario = idInventario;
         this.cantidad = cantidad;
         this.fecha = fecha;
     }

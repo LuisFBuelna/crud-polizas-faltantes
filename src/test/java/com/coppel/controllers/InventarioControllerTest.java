@@ -49,7 +49,7 @@ class InventarioControllerTest {
     @Test
     void insertarArticulo() throws Exception {
 
-        Inventario inventarioInsertar = new Inventario(35L, "Motorola Moto G 15X", 15);
+        Inventario inventarioInsertar = new Inventario(35L, 15, 1);
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
@@ -62,8 +62,8 @@ class InventarioControllerTest {
         result.andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nombre").value(inventarioInsertar.getNombre()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cantidad").value(inventarioInsertar.getCantidad()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.idArticulo").value(inventarioInsertar.getIdArticulo()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(3)))
                 .andReturn();
     }
@@ -71,7 +71,7 @@ class InventarioControllerTest {
     @Test
     void guardarArticulo() throws Exception {
 
-        Inventario inventarioUpdate = new Inventario(16L, "LG L-500X", 25);
+        Inventario inventarioUpdate = new Inventario(16L, 5, 25);
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();

@@ -1,13 +1,10 @@
 package com.coppel.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.sql.Date;
 
 @Builder
 @Data
@@ -23,12 +20,12 @@ public class Polizas {
     private int id;
     
     @NotNull
-    @Column(name = "empleadogenero")
+    @Column(name = "empleado_genero")
     private Integer empleadoGenero;
 
     @NotNull
-    @Column(name = "sku")
-    private int sku;
+    @Column(name = "id_inventario")
+    private int idInventario;
 
     @NotNull
     @Column(name = "cantidad")
@@ -41,17 +38,17 @@ public class Polizas {
     public Polizas() {
     }
 
-    public Polizas(int id, int empleadoGenero, int sku, int cantidad, String fecha) {
+    public Polizas(int id, int empleadoGenero, int idInventario, int cantidad, String fecha) {
         this.id = id;
         this.empleadoGenero = empleadoGenero;
-        this.sku = sku;
+        this.idInventario = idInventario;
         this.cantidad = cantidad;
         this.fecha = fecha;
     }
 
-    public Polizas(Integer empleadoGenero, int sku, int cantidad, String fecha) {
+    public Polizas(Integer empleadoGenero, int idInventario, int cantidad, String fecha) {
         this.empleadoGenero = empleadoGenero;
-        this.sku = sku;
+        this.idInventario = idInventario;
         this.cantidad = cantidad;
         this.fecha = fecha;
     }
@@ -72,12 +69,12 @@ public class Polizas {
         this.empleadoGenero = empleadoGenero;
     }
 
-    public int getSku() {
-        return sku;
+    public int getIdInventario() {
+        return idInventario;
     }
 
-    public void setSku(int sku) {
-        this.sku = sku;
+    public void setIdInventario(int idInventario) {
+        this.idInventario = idInventario;
     }
 
     public int getCantidad() {

@@ -7,8 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+@NoArgsConstructor
 @Entity
 @Table(name = "empleado")
 public class Empleado implements Serializable{
@@ -31,8 +34,11 @@ public class Empleado implements Serializable{
     @NotNull
     @Column(name = "puesto")
     private String puesto;
-    
-    
+
+    @NotNull
+    @Column(name = "estatus")
+    private int status;
+
     public Long getId() {
         return id;
     }
@@ -65,19 +71,26 @@ public class Empleado implements Serializable{
         this.puesto = puesto;
     }
 
-    public Empleado() {
+    public int getStatus() {
+        return status;
     }
 
-    public Empleado(Long id, String nombre, String apellido, String puesto) {
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Empleado(Long id, String nombre, String apellido, String puesto, int status) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.puesto = puesto;
+        this.status = status;
     }
 
-    public Empleado(String nombre, String apellido, String puesto) {
+    public Empleado(String nombre, String apellido, String puesto, int status) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.puesto = puesto;
+        this.status = status;
     }
 }

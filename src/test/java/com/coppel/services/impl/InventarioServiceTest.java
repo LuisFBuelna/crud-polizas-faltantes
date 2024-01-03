@@ -38,8 +38,8 @@ public class InventarioServiceTest {
         Long id = 1L;
         Inventario inventarioById = new Inventario();
         inventarioById.setId(id);
-        inventarioById.setNombre("Lavadora Mabe G600");
         inventarioById.setCantidad(5);
+        inventarioById.setIdArticulo(1);
         Optional<Inventario> optionalInventarioById = Optional.of(inventarioById);
         
         when(inventarioRepository.findById(id)).thenReturn(optionalInventarioById);
@@ -55,8 +55,8 @@ public class InventarioServiceTest {
         Long id = 2L;
         Inventario inventarioInsert = new Inventario();
         inventarioInsert.setId(id);
-        inventarioInsert.setNombre("Refrigerador LG");
         inventarioInsert.setCantidad(70);
+        inventarioInsert.setIdArticulo(1);
         
         //Mockear el comportamiento del repositorio
         when(inventarioRepository.save(inventarioInsert)).thenReturn(inventarioInsert);
@@ -66,7 +66,7 @@ public class InventarioServiceTest {
         
         //Verificar el resultado
         assertEquals(id, inventarioResult.getId());
-        assertEquals(inventarioInsert.getNombre(), inventarioResult.getNombre());
+        assertEquals(inventarioInsert.getIdArticulo(), inventarioResult.getIdArticulo());
         assertEquals(inventarioInsert.getCantidad(), inventarioResult.getCantidad());
         
         //Verificar que se haya llamado al metodo save del repositorio
@@ -76,9 +76,9 @@ public class InventarioServiceTest {
     @Test
     public void testGetAllInventario(){
         //Datos de prueba
-        Inventario inventarioGet1 = new Inventario(1L, "Plancha T200", 15);
-        Inventario inventarioGet2 = new Inventario(2L, "Maleta Nautica", 20);
-        Inventario inventarioGet3 = new Inventario(3L, "Celular Moto G XT", 25);
+        Inventario inventarioGet1 = new Inventario(1L, 5, 15);
+        Inventario inventarioGet2 = new Inventario(2L, 5, 20);
+        Inventario inventarioGet3 = new Inventario(3L, 5, 25);
         List<Inventario> inventario = new ArrayList<>();
         inventario.add(inventarioGet1);
         inventario.add(inventarioGet2);

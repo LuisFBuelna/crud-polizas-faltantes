@@ -43,6 +43,7 @@ class EmpleadoServiceTest {
         empleado3.setNombre("Duff");
         empleado3.setApellido("Mackagan");
         empleado3.setPuesto("Supervisor");
+        empleado3.setStatus(1);
         Optional<Empleado> optionalEmpleado3 = Optional.of(empleado3);
         
         //Mockear el comportamiento del empleado de la api rest
@@ -64,6 +65,7 @@ class EmpleadoServiceTest {
         empleadoCreate.setNombre("Rodolfo");
         empleadoCreate.setApellido("Reno");
         empleadoCreate.setPuesto("Cargador de Bodega");
+        empleadoCreate.setStatus(1);
         
         //Mockear el comportamiento del repositorio
         when(empleadoRepository.save(empleadoCreate)).thenReturn(empleadoCreate);
@@ -84,9 +86,9 @@ class EmpleadoServiceTest {
     @Test
     public void testGetAllEmpleados(){
         //Datos de prueba
-        Empleado empleadoGet1 = new Empleado(2L, "Raul", "Bastidas", "Almacen");
-        Empleado empleadoGet2 = new Empleado(3L, "Esteban", "Gonzalez", "Almacen");
-        Empleado empleadoGet3 = new Empleado(4L, "Laura", "Madrid", "Gerente");
+        Empleado empleadoGet1 = new Empleado(2L, "Raul", "Bastidas", "Almacen", 1);
+        Empleado empleadoGet2 = new Empleado(3L, "Esteban", "Gonzalez", "Almacen", 1);
+        Empleado empleadoGet3 = new Empleado(4L, "Laura", "Madrid", "Gerente", 1);
         List<Empleado> empleados = new ArrayList<>();
         empleados.add(empleadoGet1);
         empleados.add(empleadoGet2);
@@ -111,7 +113,7 @@ class EmpleadoServiceTest {
     public void testDeleteEmpleado(){
         //Datos de prueba
         Long empleadoId = 1L;
-        Empleado empleadoD = new Empleado(1L, "Raul", "Bastidas", "Almacen");
+        Empleado empleadoD = new Empleado(1L, "Raul", "Bastidas", "Almacen", 1);
         
         //Mockear el comportamiento del repositorio
         when(empleadoRepository.findById(empleadoD.getId())).thenReturn(Optional.of(empleadoD));

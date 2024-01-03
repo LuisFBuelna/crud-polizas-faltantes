@@ -55,13 +55,13 @@ class EmpleadoControllerTest {
     Empleado empleadoDos;
     List<Empleado> listaEmpleados = new ArrayList<>();
 
-    Empleado crearEmpleado = new Empleado(77L, "Roberto", "Carlos", "SubGerente Muebles");
+    Empleado crearEmpleado = new Empleado(77L, "Roberto", "Carlos", "SubGerente Muebles", 1);
 
 
     @BeforeEach
     void setUp() {
-        empleadoUno = new Empleado("Ernesto", "No Feliz", "Auxiliar");
-        empleadoDos = new Empleado(21L, "Roberto", "Castañeda", "SubGerente");
+        empleadoUno = new Empleado("Ernesto", "No Feliz", "Auxiliar", 1);
+        empleadoDos = new Empleado(21L, "Roberto", "Castañeda", "SubGerente", 1);
         listaEmpleados.add(empleadoUno);
         listaEmpleados.add(empleadoDos);
 
@@ -77,10 +77,10 @@ class EmpleadoControllerTest {
     @Test
     void listarTodosLosEmpleados() throws Exception {
 
-        Empleado empleadoGet1 = new Empleado(2L, "Ernesto", "No Feliz", "Auxiliar");
-        Empleado empleadoGet2 = new Empleado(3L, "Esteban", "Valenzuela", "Auxiliar");
-        Empleado empleadoGet3 = new Empleado(4L, "Rocio", "Madrid", "Gerente");
-        Empleado empleadoById = new Empleado(1L, "Carlos", "Santibañez", "Gerente de Tienda");
+        Empleado empleadoGet1 = new Empleado(2L, "Ernesto", "No Feliz", "Auxiliar", 1);
+        Empleado empleadoGet2 = new Empleado(3L, "Esteban", "Valenzuela", "Auxiliar", 1);
+        Empleado empleadoGet3 = new Empleado(4L, "Rocio", "Madrid", "Gerente", 1);
+        Empleado empleadoById = new Empleado(1L, "Carlos", "Santibañez", "Gerente de Tienda", 1);
 
         List<Empleado> empleados = new ArrayList<>();
         empleados.add(empleadoGet1);
@@ -137,9 +137,9 @@ class EmpleadoControllerTest {
     @Test
     void actualizarEmpleado() throws Exception {
         long empleadoId = 1L;
-        Empleado empleadoGuardado = new Empleado("Armando", "Hoyos", "Subgerente de Area");
+        Empleado empleadoGuardado = new Empleado("Armando", "Hoyos", "Subgerente de Area", 1);
 
-        Empleado empleadoUpdate = new Empleado(1L, "Ricardo", "Rocha", "Subgerente de Area 1");
+        Empleado empleadoUpdate = new Empleado(1L, "Ricardo", "Rocha", "Subgerente de Area 1", 1);
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -176,7 +176,7 @@ class EmpleadoControllerTest {
     @SneakyThrows
     @Test
     void listarEmpleadoPorId() throws Exception {
-        Empleado empleadoById = new Empleado(1L, "Carlos", "Santibañez", "Gerente de Tienda");
+        Empleado empleadoById = new Empleado(1L, "Carlos", "Santibañez", "Gerente de Tienda", 1);
 
         when(empleadoService.findEmpleadoById(1L))
                 .thenReturn(Optional.of(empleadoById));

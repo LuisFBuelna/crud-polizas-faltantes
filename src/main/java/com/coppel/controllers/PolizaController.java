@@ -23,9 +23,6 @@ public class PolizaController {
     private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private PolizasService polizaService;
 
     @GetMapping
@@ -51,9 +48,9 @@ public class PolizaController {
     @PutMapping("/update")
     public ResponseEntity<PolizaDTO> updatePoliza(@RequestBody PolizaDTO polizaDTO) {
         log.info("Entrando a endpoint updatePoliza");
-        polizaService.modificarPoliza(polizaDTO);
+        PolizaDTO polizaModificada = polizaService.modificarPoliza(polizaDTO);
         log.info("Retornando poliza modificada");
-        return ResponseEntity.status(HttpStatus.OK).body(polizaDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(polizaModificada);
     }
 
     @DeleteMapping("/delete/{id}")

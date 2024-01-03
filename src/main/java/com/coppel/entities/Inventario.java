@@ -17,16 +17,16 @@ public class Inventario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sku")
+    @Column(name = "id")
     private Long id;
-
-    @NotNull
-    @Column(name = "nombre")
-    private String nombre;
 
     @NotNull
     @Column(name = "cantidad")
     private int cantidad;
+
+    @NotNull
+    @Column(name = "id_articulo")
+    private int idArticulo;
 
     public Long getId() {
         return id;
@@ -36,14 +36,6 @@ public class Inventario implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public int getCantidad() {
         return cantidad;
     }
@@ -51,18 +43,21 @@ public class Inventario implements Serializable {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
-    
+
+    public int getIdArticulo() {
+        return idArticulo;
+    }
+
+    public void setIdArticulo(int idArticulo) {
+        this.idArticulo = idArticulo;
+    }
+
     public Inventario() {
     }
 
-    public Inventario(Long id, String nombre, int cantidad) {
+    public Inventario(Long id, int cantidad, int idArticulo) {
         this.id = id;
-        this.nombre = nombre;
         this.cantidad = cantidad;
+        this.idArticulo = idArticulo;
     }
-
-   
-
-    
 }

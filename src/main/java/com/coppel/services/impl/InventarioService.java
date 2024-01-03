@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class InventarioService {
 
-    private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
+    private static final Logger log = LoggerFactory.getLogger(EmpleadoService.class);
 
     @Autowired
     private InventarioRepository inventarioRepository;
@@ -30,9 +30,6 @@ public class InventarioService {
 
     public Inventario create(Inventario inventario){
         Inventario inventario1 = inventarioRepository.save(inventario);
-            if (!isString(inventario)) {
-                throw new IllegalArgumentException("Los parametros proporcionados son incorrectos");
-            }
             if (inventario == null) {
                 throw new IncorrectBodyException("El articulo no se pudo registrar correctamente");
             }
@@ -42,10 +39,6 @@ public class InventarioService {
     public Inventario save(Inventario inventario){
         log.info("Creando articulo");
         Inventario inventario1 = inventarioRepository.save(inventario);
-        if (!isString(inventario)) {
-            log.info("Retornando un IllegalArgumentException desde capa servicio");
-            throw new IllegalArgumentException("Los parametros proporcionados son incorrectos");
-        }
         if (inventario == null) {
             log.info("Retornando un IncorrectBodyException desde capa servicio");
             throw new IncorrectBodyException("El articulo no se pudo registrar correctamente");
@@ -85,12 +78,4 @@ public class InventarioService {
         log.info("Articulo encontrado por id");
         return inventarioRepository.findById(id);
     }
-
-    public boolean isString(Inventario inventario) {
-        if (!(inventario.getNombre() instanceof String)) {
-            return false;
-        }
-        return true;
-    }
-
 }
