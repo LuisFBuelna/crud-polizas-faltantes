@@ -58,4 +58,9 @@ public class Inventario implements Serializable {
         this.cantidad = cantidad;
         this.idArticulo = idArticulo;
     }
+
+    public Inventario(int cantidad, int idArticulo) {
+        this.cantidad = cantidad;
+        this.idArticulo = idArticulo;
+    }
 }
