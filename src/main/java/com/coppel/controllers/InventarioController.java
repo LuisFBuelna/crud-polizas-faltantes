@@ -34,7 +34,7 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.getAllInventario());
     }
 
-    @PostMapping("/insertar")
+    @PostMapping("/insertarArticulo")
     public ResponseEntity<Inventario> insertarArticulo(@Valid @RequestBody Inventario inventario) {
         log.info("Entrando a endpoint insertarArticulo");
         Inventario temporal = inventarioService.save(inventario);

@@ -34,7 +34,7 @@ public class PolizaController {
     @GetMapping("/{id}")
     public ResponseEntity<PolizaDTO> listarPolizaPorId(@PathVariable("id") Long id) {
         log.info("Entrando a endpoint listarPolizaPorId");
-        return ResponseEntity.ok(polizaService.finPolizaById(id));
+        return ResponseEntity.ok(polizaService.findPolizaById(id));
     }
 
     @PostMapping("/insertarPoliza")

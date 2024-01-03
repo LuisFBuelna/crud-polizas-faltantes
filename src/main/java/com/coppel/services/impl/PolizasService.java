@@ -44,7 +44,7 @@ public class PolizasService {
         return polizasDto;
     }
 
-    public PolizaDTO finPolizaById(@NonNull @Positive Long id) {
+    public PolizaDTO findPolizaById(@NonNull @Positive Long id) {
         log.info("Entrando a capa servicio findById");
         Optional<Polizas> encontrar = polizaRepository.findById(id);
         PolizaDTO polizaDTO = PolizaMapper.mapper.optionalPolizaToPolizaDto(encontrar);
