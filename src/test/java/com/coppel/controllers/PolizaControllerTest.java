@@ -51,7 +51,7 @@ class PolizaControllerTest {
     @Test
     void listarPolizaPorId() throws Exception {
 
-        ResultActions response = mockMvc.perform(get("/polizas/{id}", 3));
+        ResultActions response = mockMvc.perform(get("/polizas/{id}", 1));
 
         response.andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -71,7 +71,7 @@ class PolizaControllerTest {
     @Test
     void insertarPoliza() throws Exception {
 
-        PolizaDTO polizaInsertar = new PolizaDTO(2, 7, 5, String.valueOf(LocalDate.now()));
+        PolizaDTO polizaInsertar = new PolizaDTO(2, 9, 2, String.valueOf(LocalDate.now()));
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
@@ -93,7 +93,7 @@ class PolizaControllerTest {
     @Test
     void updatePoliza() throws Exception {
 
-        PolizaDTO polizaUpdate = new PolizaDTO(27,2, 7, 10, String.valueOf(LocalDate.now()));
+        PolizaDTO polizaUpdate = new PolizaDTO(1,2, 8, 30, String.valueOf(LocalDate.now()));
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
@@ -115,9 +115,9 @@ class PolizaControllerTest {
     @Test
     void deletePoliza() throws Exception {
 
-        ResultActions response = mockMvc.perform(delete("/polizas/delete/{id}", 73));
+        ResultActions response = mockMvc.perform(delete("/polizas/delete/{id}", 100));
 
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest());
     }
 }

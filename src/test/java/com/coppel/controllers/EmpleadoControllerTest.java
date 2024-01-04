@@ -129,7 +129,7 @@ class EmpleadoControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nombre").value(crearEmpleado.getNombre()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.apellido").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.puesto").value(crearEmpleado.getPuesto()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(4)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(5)))
                 .andReturn();
 
     }

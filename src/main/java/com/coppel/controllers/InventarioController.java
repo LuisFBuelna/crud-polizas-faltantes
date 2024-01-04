@@ -105,11 +105,4 @@ public class InventarioController {
             throw ex;
         }
     }
-
-    @GetMapping("/verinventario")
-    public ResponseEntity<List<Inventario>> obtenerInventario() {
-        return ResponseEntity.ok(inventarioService.obtenerInventario());
-    }
-
-
 }
