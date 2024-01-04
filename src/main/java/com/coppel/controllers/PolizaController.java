@@ -1,6 +1,7 @@
 package com.coppel.controllers;
 
 import com.coppel.dto.PolizaDTO;
+import com.coppel.dto.PolizaEmpleadoDTO;
 import com.coppel.entities.Polizas;
 import com.coppel.exceptions.InternalException;
 import com.coppel.services.impl.PolizasService;
@@ -30,6 +31,11 @@ public class PolizaController {
     public ResponseEntity<List<PolizaDTO>> listarTodasLasPolizas() {
         log.info("Obteniendo lista de polizas");
         return ResponseEntity.ok(polizaService.getAllPolizas());
+    }
+
+    @GetMapping("/empleados")
+    public ResponseEntity<List<PolizaEmpleadoDTO>> PolizasConEmpleado() {
+        return ResponseEntity.ok(polizaService.getPolizasEmpleado());
     }
 
     @GetMapping("/{id}")

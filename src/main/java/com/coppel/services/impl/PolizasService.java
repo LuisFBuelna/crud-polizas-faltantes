@@ -2,6 +2,7 @@ package com.coppel.services.impl;
 
 import com.coppel.controllers.EmpleadoController;
 import com.coppel.dto.PolizaDTO;
+import com.coppel.dto.PolizaEmpleadoDTO;
 import com.coppel.entities.Polizas;
 import com.coppel.exceptions.InternalException;
 import com.coppel.exceptions.NotFoundException;
@@ -42,6 +43,10 @@ public class PolizasService {
                 polizasLista -> PolizaMapper.mapper.polizaToPolizaDto(polizasLista)).collect(Collectors.toList());
 
         return polizasDto;
+    }
+
+    public List<PolizaEmpleadoDTO> getPolizasEmpleado(){
+        return (List<PolizaEmpleadoDTO>) polizaRepository.listarPolizaEmpleado();
     }
 
     public PolizaDTO findPolizaById(@NonNull @Positive Long id) {
