@@ -7,6 +7,7 @@ import com.coppel.entities.Polizas;
 import com.coppel.exceptions.InternalException;
 import com.coppel.exceptions.NotFoundException;
 import com.coppel.mapper.PolizaMapper;
+import com.coppel.repositories.PolizaEmpleadoDTORepository;
 import com.coppel.repositories.PolizasRepository;
 import jakarta.validation.constraints.Positive;
 import org.springframework.lang.NonNull;
@@ -20,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,6 +31,9 @@ public class PolizasService {
 
     @Autowired
     private PolizasRepository polizaRepository;
+
+    @Autowired
+    private PolizaEmpleadoDTORepository dtoRepository;
 
     public PolizasService(PolizasRepository polizaRepository) {
         this.polizaRepository = polizaRepository;
@@ -46,7 +49,11 @@ public class PolizasService {
     }
 
     public List<PolizaEmpleadoDTO> getPolizasEmpleado(){
-        return (List<PolizaEmpleadoDTO>) polizaRepository.listarPolizaEmpleado();
+        return (List<PolizaEmpleadoDTO>) dtoRepository.listarPolizaEmpleado();
+    }
+
+    public PolizaEmpleadoDTO getPolizaEmpleadoById(int idPoliza){
+        return dtoRepository.listarPolizaEmpleadoPorId(idPoliza);
     }
 
     public PolizaDTO findPolizaById(@NonNull @Positive Long id) {

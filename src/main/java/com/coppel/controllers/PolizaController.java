@@ -44,6 +44,12 @@ public class PolizaController {
         return ResponseEntity.ok(polizaService.findPolizaById(id));
     }
 
+    @GetMapping("/empleados/{id}")
+    public ResponseEntity<PolizaEmpleadoDTO> listarPolizaEmpleadoPorId(@PathVariable("id") int idPoliza){
+        log.info("Entrando a endpoint listarPolizaEmpleadoPorId");
+        return ResponseEntity.ok((polizaService.getPolizaEmpleadoById(idPoliza)));
+    }
+
     @PostMapping("/insertarPoliza")
     public ResponseEntity<PolizaDTO> insertarPoliza(@RequestBody @Valid PolizaDTO polizaDTO) throws InternalException {
         log.info("Entrando a endpoint insertarPoliza");
