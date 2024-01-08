@@ -18,8 +18,8 @@ public class MainApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://10.59.18.232:5173/**")
-                        .allowedMethods("*");
+                registry.addMapping("/**").allowedOrigins("/**")
+                        .allowedMethods("*").allowedHeaders("*");
             }
         };
     }
