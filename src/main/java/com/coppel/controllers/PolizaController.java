@@ -16,7 +16,6 @@ import java.util.List;
 
 @RequestMapping("/polizas")
 @RestController
-@CrossOrigin("*")
 public class PolizaController {
 
     private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
