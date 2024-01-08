@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/empleados")
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("**")
 public class EmpleadoController {
 
     private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);

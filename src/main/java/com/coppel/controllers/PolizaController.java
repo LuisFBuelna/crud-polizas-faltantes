@@ -2,7 +2,6 @@ package com.coppel.controllers;
 
 import com.coppel.dto.PolizaDTO;
 import com.coppel.dto.PolizaEmpleadoDTO;
-import com.coppel.entities.Polizas;
 import com.coppel.exceptions.InternalException;
 import com.coppel.services.impl.PolizasService;
 import jakarta.validation.Valid;
@@ -11,15 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/polizas")
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("**")
 public class PolizaController {
 
     private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
