@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RequestMapping("/inventario")
 @RestController
-@CrossOrigin("**")
+@CrossOrigin("*")
 public class InventarioController {
 
     private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
