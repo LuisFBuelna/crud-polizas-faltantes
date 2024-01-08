@@ -2,6 +2,9 @@ package com.coppel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class MainApplication {
@@ -10,5 +13,14 @@ public class MainApplication {
         SpringApplication.run(MainApplication.class, args);
     }
 
-
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://10.59.18.232:5173/**")
+                        .allowedMethods("*");
+            }
+        };
+    }
 }
