@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ class EmpleadoServiceTest {
     }
     
     @Test
-    public void testGetUserByIdOptional(){
+    public void testGetUserByIdOptional() throws Exception {
         Long id2 = 29L;
         Empleado empleado3 = new Empleado();
         empleado3.setId(id2);
@@ -57,7 +58,7 @@ class EmpleadoServiceTest {
     }
     
     @Test
-    public void testCreate(){
+    public void testCreate() throws Exception {
         //Datos de prueba
         Long id = 1L;
         Empleado empleadoCreate = new Empleado();
@@ -106,11 +107,12 @@ class EmpleadoServiceTest {
         assertEquals(empleados.get(0), empleadosResult.get(0));
         assertEquals(empleados.get(1), empleadosResult.get(1));
         assertEquals(empleados.get(2), empleadosResult.get(2));
+        verify(empleadoRepository).findAll();
         
     }
     
     @Test
-    public void testDeleteEmpleado(){
+    public void testDeleteEmpleado() throws Exception {
         //Datos de prueba
         Long empleadoId = 1L;
         Empleado empleadoD = new Empleado(1L, "Raul", "Bastidas", "Almacen", 1);

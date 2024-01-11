@@ -25,28 +25,28 @@ public class EmpleadoService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Empleado create(Empleado empleado) {
-        Empleado empleado1 = empleadoRepository.save(empleado);
-        if (empleado == null) {
-            throw new IncorrectBodyException("El empleado no se pudo registrar correctamente");
-        }
-        return empleado;
-    }
-
-    public Empleado save(Empleado empleado) {
-        Empleado empleado1 = empleadoRepository.save(empleado);
-        if (empleado == null) {
-            throw new IncorrectBodyException("El empleado no se pudo modificar correctamente");
-        }
-        return empleado;
-    }
-
     public List<Empleado> getAllEmpleados() {
         log.info("Buscando empleados");
         return empleadoRepository.findAll();
     }
 
-    public Optional<Empleado> deleteEmpleado(Long id) {
+    public Empleado create(Empleado empleado) throws Exception {
+        try {
+            Empleado empleado1 = empleadoRepository.save(empleado);
+            if (empleado == null) {
+                throw new IncorrectBodyException("El empleado no se pudo registrar correctamente");
+            }
+        } catch (IncorrectBodyException ex) {
+            throw new IncorrectBodyException("El empleado no se pudo crear correctamente");
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException();
+        } catch (Exception ex) {
+            throw new Exception();
+        }
+        return empleado;
+    }
+
+    public Optional<Empleado> deleteEmpleado(Long id) throws Exception {
         Optional<Empleado> existeEmpleado = empleadoRepository.findById(id);
         try {
             if (existeEmpleado.isPresent()) {
@@ -54,35 +54,22 @@ public class EmpleadoService {
             }
         } catch (NotFoundException ex) {
             throw new NotFoundException("El empleado a borrar no se encontro");
+        } catch (Exception ex) {
+            throw new Exception("Ocurrio un problema al borrar el empleado");
         }
         return existeEmpleado;
     }
 
-    public Optional<Empleado> findEmpleadoById(Long id) {
-        Optional<Empleado> empleado = empleadoRepository.findById(id);
-        if (empleado.isPresent()) {
-            return empleado;
-        } else {
-            throw new NotFoundException("El empleado solicitado no fue encontrado");
+    public Optional<Empleado> findEmpleadoById(Long id) throws Exception {
+        try {
+            Optional<Empleado> empleado = empleadoRepository.findById(id);
+            if (empleado.isPresent()) {
+                return empleado;
+            } else {
+                throw new NotFoundException("El empleado solicitado no fue encontrado");
+            }
+        } catch (Exception ex) {
+            throw new Exception();
         }
     }
-
-    public Optional<Empleado> findEmpleadoById2(Long id) {
-        Optional<Empleado> empleado = Optional.of(empleadoRepository.getReferenceById(id));
-        if (empleado.isPresent()) {
-            return empleado;
-        } else {
-            throw new NotFoundException("El empleado solicitado no fue encontrado");
-        }
-    }
-
-    public boolean isString(Empleado empleado) {
-        if (!(empleado.getNombre() instanceof String) ||
-                !(empleado.getApellido() instanceof String) ||
-                !(empleado.getPuesto() instanceof String)) {
-            return false;
-        }
-        return true;
-    }
-
 }

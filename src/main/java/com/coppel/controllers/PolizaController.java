@@ -55,7 +55,7 @@ public class PolizaController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<PolizaDTO> updatePoliza(@RequestBody PolizaDTO polizaDTO) {
+    public ResponseEntity<PolizaDTO> updatePoliza(@RequestBody PolizaDTO polizaDTO) throws Exception {
         log.info("Entrando a endpoint updatePoliza");
         PolizaDTO polizaModificada = polizaService.modificarPoliza(polizaDTO);
         log.info("Retornando poliza modificada");

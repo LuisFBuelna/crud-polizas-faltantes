@@ -4,6 +4,7 @@ import com.coppel.controllers.EmpleadoController;
 import com.coppel.dto.PolizaDTO;
 import com.coppel.dto.PolizaEmpleadoDTO;
 import com.coppel.entities.Polizas;
+import com.coppel.exceptions.IncorrectBodyException;
 import com.coppel.exceptions.InternalException;
 import com.coppel.exceptions.NotFoundException;
 import com.coppel.mapper.PolizaMapper;
@@ -13,6 +14,7 @@ import jakarta.validation.constraints.Positive;
 import org.springframework.lang.NonNull;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,11 +50,11 @@ public class PolizasService {
         return polizasDto;
     }
 
-    public List<PolizaEmpleadoDTO> getPolizasEmpleado(){
+    public List<PolizaEmpleadoDTO> getPolizasEmpleado() {
         return (List<PolizaEmpleadoDTO>) dtoRepository.listarPolizaEmpleado();
     }
 
-    public PolizaEmpleadoDTO getPolizaEmpleadoById(int idPoliza){
+    public PolizaEmpleadoDTO getPolizaEmpleadoById(int idPoliza) {
         return dtoRepository.listarPolizaEmpleadoPorId(idPoliza);
     }
 
@@ -78,6 +80,10 @@ public class PolizasService {
                     polizaDTO.getIdInventario(),
                     polizaDTO.getCantidad(),
                     Date.valueOf(polizaDTO.getFecha()));
+
+            if (Date.valueOf(polizaDTO.getFecha()).after(Date.valueOf(LocalDate.now()))) {
+                throw new IncorrectBodyException("Debe ingresar una fecha valida");
+            }
 
         } catch (DataAccessException ex) {
             log.info("Error de inconsistencia de datos");
@@ -111,22 +117,26 @@ public class PolizasService {
         }
     }
 
-    public PolizaDTO modificarPoliza(@RequestBody PolizaDTO polizaDTO) {
+    public PolizaDTO modificarPoliza(@RequestBody PolizaDTO polizaDTO) throws Exception {
         log.info("Entrando a modificarPoliza en capa de servicio");
         try {
             Polizas polizaTemporal = polizaRepository.actualizarPoliza(polizaDTO.getId(),
                     polizaDTO.getEmpleado(), polizaDTO.getIdInventario(),
                     polizaDTO.getCantidad(), Date.valueOf(polizaDTO.getFecha()));
 
+            if (Date.valueOf(polizaDTO.getFecha()).after(Date.valueOf(LocalDate.now()))) {
+                throw new IncorrectBodyException("Debe ingresar una fecha valida");
+            }
+
             PolizaDTO polizaMapeada = PolizaMapper.mapper.polizaToPolizaDto(polizaTemporal);
             log.info("Poliza modificada");
             return polizaMapeada;
         } catch (NotFoundException ex) {
             log.info("Ha ocurrido una DataAccessException");
-            throw ex;
+            throw new NotFoundException("La poliza a modificar no fue encontrada");
         } catch (Exception ex) {
             log.info("Ha ocurrido una Exception en capa de servicio");
-            throw ex;
+            throw new Exception();
         }
     }
 }

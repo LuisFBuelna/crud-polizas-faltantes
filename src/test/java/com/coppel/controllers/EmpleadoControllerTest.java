@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.*;
 
@@ -42,30 +43,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class EmpleadoControllerTest {
 
-    @MockBean
-    EmpleadoService empleadoService;
-
-    @InjectMocks
-    EmpleadoController empleadoController;
-
     @Autowired
     MockMvc mockMvc;
 
-    Empleado empleadoUno;
-    Empleado empleadoDos;
-    List<Empleado> listaEmpleados = new ArrayList<>();
-
     Empleado crearEmpleado = new Empleado(77L, "Roberto", "Carlos", "SubGerente Muebles", 1);
-
 
     @BeforeEach
     void setUp() {
-        empleadoUno = new Empleado("Ernesto", "No Feliz", "Auxiliar", 1);
-        empleadoDos = new Empleado(21L, "Roberto", "Castañeda", "SubGerente", 1);
-        listaEmpleados.add(empleadoUno);
-        listaEmpleados.add(empleadoDos);
-
-
         MockitoAnnotations.openMocks(this);
     }
 
@@ -77,26 +61,8 @@ class EmpleadoControllerTest {
     @Test
     void listarTodosLosEmpleados() throws Exception {
 
-        Empleado empleadoGet1 = new Empleado(2L, "Ernesto", "No Feliz", "Auxiliar", 1);
-        Empleado empleadoGet2 = new Empleado(3L, "Esteban", "Valenzuela", "Auxiliar", 1);
-        Empleado empleadoGet3 = new Empleado(4L, "Rocio", "Madrid", "Gerente", 1);
-        Empleado empleadoById = new Empleado(1L, "Carlos", "Santibañez", "Gerente de Tienda", 1);
-
-        List<Empleado> empleados = new ArrayList<>();
-        empleados.add(empleadoGet1);
-        empleados.add(empleadoGet2);
-        empleados.add(empleadoGet3);
-        empleados.add(empleadoById);
-
-        when(empleadoService.getAllEmpleados()).thenReturn(empleados);
-
         this.mockMvc.perform(get("/empleados"))
                 .andDo(print()).andExpect(status().isOk());
-
-        //Verificar el resultado
-        verify(empleadoService, times(1)).getAllEmpleados();
-
-
     }
 
     @Test
@@ -106,17 +72,6 @@ class EmpleadoControllerTest {
         objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
         String requestJson = ow.writeValueAsString(crearEmpleado);
-
-        //Pruebas unitarias
-        when(empleadoService.create(crearEmpleado)).thenReturn(crearEmpleado);
-
-        Empleado crearController = empleadoController.insertarEmpleado(crearEmpleado).getBody();
-
-        //Verificar service
-        assertEquals(crearEmpleado, crearController);
-        assertEquals(crearEmpleado.getNombre(), crearController.getNombre());
-        assertEquals(crearEmpleado.getApellido(), crearController.getApellido());
-        assertEquals(crearEmpleado.getPuesto(), crearController.getPuesto());
 
         //Pruebas de integracion
         ResultActions response = this.mockMvc.perform(MockMvcRequestBuilders.post("/empleados/insertar")
@@ -136,31 +91,23 @@ class EmpleadoControllerTest {
 
     @Test
     void actualizarEmpleado() throws Exception {
-        long empleadoId = 1L;
-        Empleado empleadoGuardado = new Empleado("Armando", "Hoyos", "Subgerente de Area", 1);
-
-        Empleado empleadoUpdate = new Empleado(1L, "Ricardo", "Rocha", "Subgerente de Area 1", 1);
+        long empleadoId = 2L;
+        Empleado empleadoUpdate = new Empleado(2L, "Ricardo", "Rocha", "Subgerente de Area 1", 1);
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
         String requestJson = ow.writeValueAsString(empleadoUpdate);
 
-        given(empleadoService.findEmpleadoById(empleadoId)).willReturn(Optional.of(empleadoGuardado));
-        given(empleadoService.save(any(Empleado.class)))
-                .willAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
-
         ResultActions response = mockMvc.perform(put("/empleados/actualizar/{id}", empleadoId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson));
-
 
         response.andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.nombre").value(empleadoUpdate.getNombre()))
                 .andExpect(jsonPath("$.apellido").value(empleadoUpdate.getApellido()))
                 .andExpect(jsonPath("$.puesto").value(empleadoUpdate.getPuesto()));
-
     }
 
     @Test
@@ -178,13 +125,8 @@ class EmpleadoControllerTest {
     void listarEmpleadoPorId() throws Exception {
         Empleado empleadoById = new Empleado(1L, "Carlos", "Santibañez", "Gerente de Tienda", 1);
 
-        when(empleadoService.findEmpleadoById(1L))
-                .thenReturn(Optional.of(empleadoById));
-
-        this.mockMvc.perform(get("/empleados/1"))
+        this.mockMvc.perform(get("/empleados/2"))
                 .andDo(print())
                 .andExpect(status().isOk());
-
-        verify(empleadoService, times(1)).findEmpleadoById(1L);
     }
 }

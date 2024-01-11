@@ -41,51 +41,28 @@ public class EmpleadoController {
     }
 
     @PostMapping("/insertar")
-    public ResponseEntity<Empleado> insertarEmpleado(@Valid @RequestBody Empleado empleado) {
-        try {
-            empleadoService.create(empleado);
-            return ResponseEntity.created(new URI("/api/empleados" + empleado.getId())).body(empleado);
-        } catch (IncorrectBodyException ex) {
-            throw ex;
-        } catch (URISyntaxException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+    public ResponseEntity<Empleado> insertarEmpleado(@Valid @RequestBody Empleado empleado) throws Exception {
+        empleadoService.create(empleado);
+        return ResponseEntity.created(new URI("/api/empleados" + empleado.getId())).body(empleado);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado empleado) {
+    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado empleado) throws Exception {
         Empleado temporal = null;
-        try {
-            temporal = empleadoService.save(empleado);
-        } catch (IllegalArgumentException ex) {
-            throw ex;
-        } catch (IncorrectBodyException ex) {
-            throw ex;
-        }
-        return ResponseEntity.ok(temporal);
+        temporal = empleadoService.create(empleado);
+        return ResponseEntity.status(HttpStatus.OK).body(temporal);
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Optional<Empleado>> eliminarEmpleado(@PathVariable Long id) {
-        try {
+    public ResponseEntity<Optional<Empleado>> eliminarEmpleado(@PathVariable Long id) throws Exception {
             empleadoService.deleteEmpleado(id);
-        } catch (NotFoundException ex) {
-            throw ex;
-        }
-          catch (Exception ex) {
-            ex.printStackTrace();
-        }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Empleado>> listarEmpleadoPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Optional<Empleado>> listarEmpleadoPorId(@PathVariable("id") Long id) throws Exception {
         ResponseEntity<Optional<Empleado>> empleado;
-        try {
             empleado = ResponseEntity.ok(empleadoService.findEmpleadoById(id));
-        } catch (NotFoundException ex) {
-            throw ex;
-        }
         return empleado;
     }
 }
