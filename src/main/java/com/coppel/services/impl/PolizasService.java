@@ -11,6 +11,8 @@ import com.coppel.mapper.PolizaMapper;
 import com.coppel.repositories.PolizaEmpleadoDTORepository;
 import com.coppel.repositories.PolizasRepository;
 import jakarta.validation.constraints.Positive;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.lang.NonNull;
 
 import java.sql.Date;
@@ -41,13 +43,14 @@ public class PolizasService {
         this.polizaRepository = polizaRepository;
     }
 
-    public List<PolizaDTO> getAllPolizas() {
+    public Page<PolizaDTO> getAllPolizas() {
         List<Polizas> polizas = polizaRepository.findAll();
 
-        List<PolizaDTO> polizasDto = polizas.stream().map(
-                polizasLista -> PolizaMapper.mapper.polizaToPolizaDto(polizasLista)).collect(Collectors.toList());
+        List<PolizaDTO> polizasDto = polizas.stream()
+                .map(polizasLista -> PolizaMapper.mapper.polizaToPolizaDto(polizasLista))
+                .collect(Collectors.toList());
 
-        return polizasDto;
+        return new PageImpl<>(polizasDto);
     }
 
     public List<PolizaEmpleadoDTO> getPolizasEmpleado() {

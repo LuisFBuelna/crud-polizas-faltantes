@@ -11,6 +11,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,9 +27,9 @@ public class EmpleadoService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public List<Empleado> getAllEmpleados() {
+    public Page<Empleado> getAllEmpleados() {
         log.info("Buscando empleados");
-        return empleadoRepository.findAll();
+        return new PageImpl<>(empleadoRepository.findAll());
     }
 
     public Empleado create(Empleado empleado) throws Exception {

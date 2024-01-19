@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,9 @@ public class PolizaController {
     private PolizasService polizaService;
 
     @GetMapping
-    public ResponseEntity<List<PolizaDTO>> listarTodasLasPolizas() {
+    public ResponseEntity<Page<PolizaDTO>> listarTodasLasPolizas(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         log.info("Obteniendo lista de polizas");
         return ResponseEntity.ok(polizaService.getAllPolizas());
     }
@@ -41,7 +44,7 @@ public class PolizaController {
     }
 
     @GetMapping("/empleados/{id}")
-    public ResponseEntity<PolizaEmpleadoDTO> listarPolizaEmpleadoPorId(@PathVariable("id") int idPoliza){
+    public ResponseEntity<PolizaEmpleadoDTO> listarPolizaEmpleadoPorId(@PathVariable("id") int idPoliza) {
         log.info("Entrando a endpoint listarPolizaEmpleadoPorId");
         return ResponseEntity.ok((polizaService.getPolizaEmpleadoById(idPoliza)));
     }
