@@ -5,6 +5,8 @@ import com.coppel.entities.Polizas;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.modelmapper.internal.bytebuddy.description.type.TypeList;
+import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 

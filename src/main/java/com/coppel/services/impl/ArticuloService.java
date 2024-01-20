@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,18 +28,14 @@ public class ArticuloService {
     @Autowired
     private ArticuloRepository articuloRepository;
 
-    public Page<ArticuloDTO> obtenerArticulos(){
+    public Page<Articulo> obtenerArticulos(Pageable pageable) {
         log.info("Buscando todos los articulos");
-        List<Articulo> articulos = articuloRepository.findAll();
+        Page<Articulo> articulos = articuloRepository.findAll(pageable);
 
-        List<ArticuloDTO> articulosDTO = articulos.stream().map(
-                articulosLista -> ArticuloMapper.mapper.articuloToArticuloDto(articulosLista))
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(articulosDTO);
+        return articulos;
     }
 
-    public ArticuloDTO findArticuloById(Long id){
+    public ArticuloDTO findArticuloById(Long id) {
         log.info("Buscando articulo por id");
         Optional<Articulo> existeArticulo = articuloRepository.findById(id);
         ArticuloDTO articuloDTO = ArticuloMapper.mapper.optionalArticuloToArticuloDto(existeArticulo);
@@ -49,7 +46,7 @@ public class ArticuloService {
         return articuloDTO;
     }
 
-    public ArticuloDTO crearArticulo(ArticuloDTO articuloDTO) throws InternalException{
+    public ArticuloDTO crearArticulo(ArticuloDTO articuloDTO) throws InternalException {
         log.info("Creando articulo desde capa servicio");
         Articulo articuloRepo = null;
         Articulo articuloMapear = ArticuloMapper.mapper.articuloDtoToArticulo(articuloDTO);

@@ -11,13 +11,18 @@ import com.coppel.mapper.PolizaMapper;
 import com.coppel.repositories.PolizaEmpleadoDTORepository;
 import com.coppel.repositories.PolizasRepository;
 import jakarta.validation.constraints.Positive;
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.lang.NonNull;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class PolizasService {
@@ -43,14 +49,10 @@ public class PolizasService {
         this.polizaRepository = polizaRepository;
     }
 
-    public Page<PolizaDTO> getAllPolizas() {
-        List<Polizas> polizas = polizaRepository.findAll();
+    public Page<Polizas> getAllPolizas(Pageable pageable) {
+        Page<Polizas> polizas = polizaRepository.findAll(pageable);
 
-        List<PolizaDTO> polizasDto = polizas.stream()
-                .map(polizasLista -> PolizaMapper.mapper.polizaToPolizaDto(polizasLista))
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(polizasDto);
+        return polizas;
     }
 
     public List<PolizaEmpleadoDTO> getPolizasEmpleado() {

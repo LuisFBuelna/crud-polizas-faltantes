@@ -2,6 +2,7 @@ package com.coppel.controllers;
 
 import com.coppel.dto.PolizaDTO;
 import com.coppel.dto.PolizaEmpleadoDTO;
+import com.coppel.entities.Polizas;
 import com.coppel.exceptions.InternalException;
 import com.coppel.services.impl.PolizasService;
 import jakarta.validation.Valid;
@@ -9,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +29,9 @@ public class PolizaController {
     private PolizasService polizaService;
 
     @GetMapping
-    public ResponseEntity<Page<PolizaDTO>> listarTodasLasPolizas(
-            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+    public ResponseEntity<Page<Polizas>> listarTodasLasPolizas(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         log.info("Obteniendo lista de polizas");
-        return ResponseEntity.ok(polizaService.getAllPolizas());
+        return ResponseEntity.ok(polizaService.getAllPolizas(pageable));
     }
 
     @GetMapping("/empleados")

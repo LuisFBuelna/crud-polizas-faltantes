@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,9 +28,10 @@ public class EmpleadoService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Page<Empleado> getAllEmpleados() {
+    public Page<Empleado> getAllEmpleados(Pageable pageable) {
         log.info("Buscando empleados");
-        return new PageImpl<>(empleadoRepository.findAll());
+        Page<Empleado> empleados = empleadoRepository.findAll(pageable);
+        return empleados;
     }
 
     public Empleado create(Empleado empleado) throws Exception {

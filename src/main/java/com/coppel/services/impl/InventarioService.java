@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,9 +51,10 @@ public class InventarioService {
         return inventario1;
     }
 
-    public Page<Inventario> getAllInventario() {
+    public Page<Inventario> getAllInventario(Pageable pageable) {
         log.info("Buscando todo el inventario");
-        return new PageImpl<>(inventarioRepository.findAll());
+        Page<Inventario> inventarios = inventarioRepository.findAll(pageable);
+        return inventarios;
     }
 
     public Optional<Inventario> deleteInventario(Long id) {

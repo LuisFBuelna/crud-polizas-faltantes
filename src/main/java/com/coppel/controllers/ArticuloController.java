@@ -1,6 +1,7 @@
 package com.coppel.controllers;
 
 import com.coppel.dto.ArticuloDTO;
+import com.coppel.entities.Articulo;
 import com.coppel.exceptions.InternalException;
 import com.coppel.services.impl.ArticuloService;
 import jakarta.validation.Valid;
@@ -8,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +28,9 @@ public class ArticuloController {
     ArticuloService articuloService;
 
     @GetMapping
-    public ResponseEntity<Page<ArticuloDTO>> listarTodosLosArticulos(){
+    public ResponseEntity<Page<Articulo>> listarTodosLosArticulos(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
         log.info("Obteniendo lista de articulos");
-        return ResponseEntity.ok(articuloService.obtenerArticulos());
+        return ResponseEntity.ok(articuloService.obtenerArticulos(pageable));
     }
 
     @GetMapping("/{id}")

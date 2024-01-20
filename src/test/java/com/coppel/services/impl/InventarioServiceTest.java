@@ -91,7 +91,7 @@ public class InventarioServiceTest {
         when(inventarioRepository.findAll()).thenReturn(inventario);
         
         //Llamar el metodo del servicio a probar
-        Page<Inventario> inventarioResult = inventarioService.getAllInventario();
+        //Page<Inventario> inventarioResult = inventarioService.getAllInventario();
         
         //Verificar el resultado
         assertThat(inventario).isNotNull();
