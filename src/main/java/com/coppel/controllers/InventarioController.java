@@ -33,9 +33,15 @@ public class InventarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Inventario>> listarTodoElInventario(@PageableDefault(sort = "id", direction = Sort.Direction.ASC)Pageable pageable) {
+    public ResponseEntity<List<Inventario>> listarTodoElInventario() {
         log.info("Buscando lista de inventario");
-        return ResponseEntity.ok(inventarioService.getAllInventario(pageable));
+        return ResponseEntity.ok(inventarioService.getAllInventario());
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Inventario>> listarTodoElInventarioPageable(@PageableDefault(sort = "id", direction = Sort.Direction.ASC)Pageable pageable) {
+        log.info("Buscando lista de inventario");
+        return ResponseEntity.ok(inventarioService.listarTodoElInventarioPageable(pageable));
     }
 
     @PostMapping("/insertarArticulo")

@@ -92,4 +92,15 @@ public class Polizas {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public String toString() {
+        return "Polizas{" +
+                "id=" + id +
+                ", empleadoGenero=" + empleadoGenero +
+                ", idInventario=" + idInventario +
+                ", cantidad=" + cantidad +
+                ", fecha='" + fecha + '\'' +
+                '}';
+    }
 }

@@ -28,9 +28,15 @@ public class ArticuloController {
     ArticuloService articuloService;
 
     @GetMapping
-    public ResponseEntity<Page<Articulo>> listarTodosLosArticulos(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+    public ResponseEntity<List<Articulo>> listarTodosLosArticulos(){
         log.info("Obteniendo lista de articulos");
-        return ResponseEntity.ok(articuloService.obtenerArticulos(pageable));
+        return ResponseEntity.ok(articuloService.obtenerArticulos());
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Articulo>> listarTodosLosArticulosPageable(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+        log.info("Obteniendo lista de articulos");
+        return ResponseEntity.ok(articuloService.obtenerArticulosPageable(pageable));
     }
 
     @GetMapping("/{id}")

@@ -28,7 +28,13 @@ public class EmpleadoService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Page<Empleado> getAllEmpleados(Pageable pageable) {
+    public List<Empleado> getAllEmpleados() {
+        log.info("Buscando empleados");
+        List<Empleado> empleados = empleadoRepository.findAll();
+        return empleados;
+    }
+
+    public Page<Empleado> getAllEmpleadosPageable(Pageable pageable) {
         log.info("Buscando empleados");
         Page<Empleado> empleados = empleadoRepository.findAll(pageable);
         return empleados;

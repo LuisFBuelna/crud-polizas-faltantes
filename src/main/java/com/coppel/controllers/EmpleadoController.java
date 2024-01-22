@@ -39,9 +39,15 @@ public class EmpleadoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Empleado>> listarTodosLosEmpleados(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<List<Empleado>> listarTodosLosEmpleados() {
         log.info("Obteniendo la lista de empleados");
-        return ResponseEntity.ok(empleadoService.getAllEmpleados(pageable));
+        return ResponseEntity.ok(empleadoService.getAllEmpleados());
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Empleado>> listarTodosLosEmpleadosPageable(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        log.info("Obteniendo la lista de empleados");
+        return ResponseEntity.ok(empleadoService.getAllEmpleadosPageable(pageable));
     }
 
     @PostMapping("/insertar")

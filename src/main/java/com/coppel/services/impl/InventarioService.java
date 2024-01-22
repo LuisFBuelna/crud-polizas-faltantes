@@ -51,7 +51,13 @@ public class InventarioService {
         return inventario1;
     }
 
-    public Page<Inventario> getAllInventario(Pageable pageable) {
+    public List<Inventario> getAllInventario() {
+        log.info("Buscando todo el inventario");
+        List<Inventario> inventarios = inventarioRepository.findAll();
+        return inventarios;
+    }
+
+    public Page<Inventario> listarTodoElInventarioPageable(Pageable pageable) {
         log.info("Buscando todo el inventario");
         Page<Inventario> inventarios = inventarioRepository.findAll(pageable);
         return inventarios;

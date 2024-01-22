@@ -16,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -77,27 +79,28 @@ public class InventarioServiceTest {
     }
     
     @Test
-    public void testGetAllInventario(){
+    public void testGetAllInventarioPageable(){
         //Datos de prueba
         Inventario inventarioGet1 = new Inventario(1L, 5, 15);
         Inventario inventarioGet2 = new Inventario(2L, 5, 20);
         Inventario inventarioGet3 = new Inventario(3L, 5, 25);
-        List<Inventario> inventario = new ArrayList<>();
-        inventario.add(inventarioGet1);
-        inventario.add(inventarioGet2);
-        inventario.add(inventarioGet3);
+        List<Inventario> inventarioList = new ArrayList<>();
+        inventarioList.add(inventarioGet1);
+        inventarioList.add(inventarioGet2);
+        inventarioList.add(inventarioGet3);
+
+        Page<Inventario> inventarioPage = new PageImpl<>(inventarioList);
         
         //Mockear el comportamiento del repository
-        when(inventarioRepository.findAll()).thenReturn(inventario);
+        when(inventarioRepository.findAll(Pageable.unpaged())).thenReturn(inventarioPage);
         
         //Llamar el metodo del servicio a probar
-        //Page<Inventario> inventarioResult = inventarioService.getAllInventario();
+        Page<Inventario> inventarioResult = inventarioService.listarTodoElInventarioPageable(Pageable.unpaged());
         
         //Verificar el resultado
-        assertThat(inventario).isNotNull();
-        //assertEquals(inventario.size(), inventarioResult.get().);
-        //assertEquals(inventario.get(0), inventarioResult.get(0));
-        //assertEquals(inventario.get(1), inventarioResult.get(1));
-        //assertEquals(inventario.get(2), inventarioResult.get(2));
+        assertThat(inventarioPage).isNotNull();
+        assertEquals(inventarioPage.getTotalElements(), inventarioResult.getTotalElements());
+        assertEquals(inventarioPage.getTotalPages(), inventarioResult.getTotalPages());
+        verify(inventarioRepository).findAll(Pageable.unpaged());
     }
 }

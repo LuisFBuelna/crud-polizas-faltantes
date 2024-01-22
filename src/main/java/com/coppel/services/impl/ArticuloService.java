@@ -28,7 +28,14 @@ public class ArticuloService {
     @Autowired
     private ArticuloRepository articuloRepository;
 
-    public Page<Articulo> obtenerArticulos(Pageable pageable) {
+    public List<Articulo> obtenerArticulos() {
+        log.info("Buscando todos los articulos");
+        List<Articulo> articulos = articuloRepository.findAll();
+
+        return articulos;
+    }
+
+    public Page<Articulo> obtenerArticulosPageable(Pageable pageable) {
         log.info("Buscando todos los articulos");
         Page<Articulo> articulos = articuloRepository.findAll(pageable);
 

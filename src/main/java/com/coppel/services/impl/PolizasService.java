@@ -49,7 +49,13 @@ public class PolizasService {
         this.polizaRepository = polizaRepository;
     }
 
-    public Page<Polizas> getAllPolizas(Pageable pageable) {
+    public List<Polizas> getAllPolizas() {
+        List<Polizas> polizas = polizaRepository.findAll();
+
+        return polizas;
+    }
+
+    public Page<Polizas> listarTodasLasPolizasPageable(Pageable pageable) {
         Page<Polizas> polizas = polizaRepository.findAll(pageable);
 
         return polizas;

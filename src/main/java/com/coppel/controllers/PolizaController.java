@@ -29,9 +29,15 @@ public class PolizaController {
     private PolizasService polizaService;
 
     @GetMapping
-    public ResponseEntity<Page<Polizas>> listarTodasLasPolizas(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<List<Polizas>> listarTodasLasPolizas() {
         log.info("Obteniendo lista de polizas");
-        return ResponseEntity.ok(polizaService.getAllPolizas(pageable));
+        return ResponseEntity.ok(polizaService.getAllPolizas());
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Polizas>> listarTodasLasPolizasPageable(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        log.info("Obteniendo lista de polizas");
+        return ResponseEntity.ok(polizaService.listarTodasLasPolizasPageable(pageable));
     }
 
     @GetMapping("/empleados")
