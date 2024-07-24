@@ -1,6 +1,5 @@
 package com.coppel.exceptions;
 
-import org.springframework.http.HttpStatus;
 
 public class InternalException extends Exception{
 

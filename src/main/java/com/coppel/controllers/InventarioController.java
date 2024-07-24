@@ -23,7 +23,7 @@ import java.util.Optional;
 @RestController
 public class InventarioController {
 
-    private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
+    private static final Logger log = LoggerFactory.getLogger(InventarioController.class);
 
     @Autowired
     private InventarioService inventarioService;
@@ -87,7 +87,7 @@ public class InventarioController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity eliminarArticulo(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> eliminarArticulo(@PathVariable Long id) {
         log.info("Entrando a endpoint eliminarArticulo");
         try {
             inventarioService.deleteInventario(id);

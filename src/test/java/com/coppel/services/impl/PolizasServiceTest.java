@@ -3,28 +3,19 @@ package com.coppel.services.impl;
 import com.coppel.dto.PolizaDTO;
 import com.coppel.entities.Polizas;
 import com.coppel.exceptions.InternalException;
-import com.coppel.mapper.PolizaMapper;
 import com.coppel.repositories.PolizasRepository;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.function.BooleanSupplier;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -76,7 +67,7 @@ class PolizasServiceTest {
         Optional<PolizaDTO> optionalPolizas = Optional.ofNullable(polizasService.findPolizaById((long) id));
 
         assertEquals(polizaById.getId(), optionalPolizas.get().getId());
-        assertThat(polizasService);
+        verify(polizasService);
     }
 
     @Test

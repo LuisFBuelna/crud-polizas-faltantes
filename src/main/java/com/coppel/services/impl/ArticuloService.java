@@ -11,14 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ArticuloService {
@@ -30,16 +28,14 @@ public class ArticuloService {
 
     public List<Articulo> obtenerArticulos() {
         log.info("Buscando todos los articulos");
-        List<Articulo> articulos = articuloRepository.findAll();
 
-        return articulos;
+        return articuloRepository.findAll();
     }
 
     public Page<Articulo> obtenerArticulosPageable(Pageable pageable) {
         log.info("Buscando todos los articulos");
-        Page<Articulo> articulos = articuloRepository.findAll(pageable);
 
-        return articulos;
+        return articuloRepository.findAll(pageable);
     }
 
     public ArticuloDTO findArticuloById(Long id) {
@@ -67,8 +63,7 @@ public class ArticuloService {
             throw new InternalException("Ha ocurrido un error interno en el servidor");
         }
 
-        ArticuloDTO articuloMapeado = ArticuloMapper.mapper.articuloToArticuloDto(articuloRepo);
-        return articuloMapeado;
+        return ArticuloMapper.mapper.articuloToArticuloDto(articuloRepo);
     }
 
     public void eliminarArticulo(Long id) throws Exception {
@@ -94,8 +89,7 @@ public class ArticuloService {
             Articulo articuloTemporal =
                     articuloRepository.save(ArticuloMapper.mapper.articuloDtoToArticulo(articuloDTO));
 
-            ArticuloDTO articuloMapeado = ArticuloMapper.mapper.articuloToArticuloDto(articuloTemporal);
-            return articuloMapeado;
+            return ArticuloMapper.mapper.articuloToArticuloDto(articuloTemporal);
         } catch (NotFoundException ex) {
             log.info("Ha ocurrido una DataAccessException");
             throw ex;

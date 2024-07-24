@@ -7,7 +7,11 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,19 +21,18 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- *
  * @author luis.buelna
  */
 //@Component
 //@Order(1)
 public class SessionFilter implements Filter {
 
+    Logger log = LoggerFactory.getLogger(SessionFilter.class);
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("Aloja");
 
         final HttpServletRequest req = (HttpServletRequest) request;
-        final HttpServletResponse res = (HttpServletResponse) response;
 
         final RestTemplate client = new RestTemplate();
         final HttpHeaders authHeaders = new HttpHeaders();
@@ -41,6 +44,8 @@ public class SessionFilter implements Filter {
                 chain.doFilter(request, response);
             }
         } catch (RestClientException ex) {
+            log.info("Ha ocurrido un RestClientException en SessionFilter");
+            throw new RestClientException("Ha ocurrido un RestClientException en SessionFilter");
         }
 
     }

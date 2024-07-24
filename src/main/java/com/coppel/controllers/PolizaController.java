@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 public class PolizaController {
 
-    private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
+    private static final Logger log = LoggerFactory.getLogger(PolizaController.class);
 
     @Autowired
     private PolizasService polizaService;
@@ -41,7 +41,7 @@ public class PolizaController {
     }
 
     @GetMapping("/empleados")
-    public ResponseEntity<List<PolizaEmpleadoDTO>> PolizasConEmpleado() {
+    public ResponseEntity<List<PolizaEmpleadoDTO>> polizasConEmpleado() {
         return ResponseEntity.ok(polizaService.getPolizasEmpleado());
     }
 

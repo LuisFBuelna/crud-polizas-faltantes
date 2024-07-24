@@ -76,7 +76,7 @@ public class PolizasExceptionHandler {
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<DTOException> InvalidParam(MethodArgumentNotValidException e) {
+    public ResponseEntity<DTOException> invalidParam(MethodArgumentNotValidException e) {
         DTOException exception = new DTOException(
                 e.getBindingResult().getFieldError().getDefaultMessage(),
                 HttpStatus.BAD_REQUEST);

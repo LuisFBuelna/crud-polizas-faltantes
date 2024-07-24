@@ -40,7 +40,7 @@ class EmpleadoServiceTest {
     }
 
     @Test
-    public void testGetUserByIdOptional() throws Exception {
+    void testGetUserByIdOptional() throws Exception {
         Long id2 = 29L;
         Empleado empleado3 = new Empleado();
         empleado3.setId(id2);
@@ -61,7 +61,7 @@ class EmpleadoServiceTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         //Datos de prueba
         Long id = 1L;
         Empleado empleadoCreate = new Empleado();
@@ -88,7 +88,7 @@ class EmpleadoServiceTest {
     }
 
     @Test
-    public void testGetAllEmpleadosPageable() {
+    void testGetAllEmpleadosPageable() {
         //Datos de prueba
         Empleado empleadoGet1 = new Empleado(2L, "Raul", "Bastidas", "Almacen", 1);
         Empleado empleadoGet2 = new Empleado(3L, "Esteban", "Gonzalez", "Almacen", 1);
@@ -115,7 +115,7 @@ class EmpleadoServiceTest {
     }
 
     @Test
-    public void testDeleteEmpleado() throws Exception {
+    void testDeleteEmpleado() throws Exception {
         //Datos de prueba
         Long empleadoId = 1L;
         Empleado empleadoD = new Empleado(1L, "Raul", "Bastidas", "Almacen", 1);

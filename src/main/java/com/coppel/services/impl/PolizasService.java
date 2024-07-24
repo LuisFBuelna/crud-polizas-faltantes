@@ -11,20 +11,14 @@ import com.coppel.mapper.PolizaMapper;
 import com.coppel.repositories.PolizaEmpleadoDTORepository;
 import com.coppel.repositories.PolizasRepository;
 import jakarta.validation.constraints.Positive;
-import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.lang.NonNull;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +26,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class PolizasService {
 
-    private static final Logger log = LoggerFactory.getLogger(EmpleadoController.class);
+    private static final Logger log = LoggerFactory.getLogger(PolizasService.class);
 
     @Autowired
     private PolizasRepository polizaRepository;
@@ -50,19 +43,17 @@ public class PolizasService {
     }
 
     public List<Polizas> getAllPolizas() {
-        List<Polizas> polizas = polizaRepository.findAll();
 
-        return polizas;
+        return polizaRepository.findAll();
     }
 
     public Page<Polizas> listarTodasLasPolizasPageable(Pageable pageable) {
-        Page<Polizas> polizas = polizaRepository.findAll(pageable);
 
-        return polizas;
+        return polizaRepository.findAll(pageable);
     }
 
     public List<PolizaEmpleadoDTO> getPolizasEmpleado() {
-        return (List<PolizaEmpleadoDTO>) dtoRepository.listarPolizaEmpleado();
+        return dtoRepository.listarPolizaEmpleado();
     }
 
     public PolizaEmpleadoDTO getPolizaEmpleadoById(int idPoliza) {

@@ -1,9 +1,7 @@
 package com.coppel.repositories;
 
-import com.coppel.dto.PolizaEmpleadoDTO;
 import com.coppel.entities.Polizas;
 import java.sql.Date;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,5 @@
 package com.coppel.exceptions;
 
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 

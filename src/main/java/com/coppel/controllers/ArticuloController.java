@@ -20,7 +20,7 @@ import java.util.List;
 
 @RequestMapping("/articulos")
 @RestController
-public class ArticuloController {
+public class    ArticuloController {
 
     private static final Logger log = LoggerFactory.getLogger(ArticuloController.class);
 

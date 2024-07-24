@@ -1,17 +1,13 @@
 package com.coppel.controllers;
 
 import com.coppel.entities.Empleado;
-import com.coppel.exceptions.IncorrectBodyException;
-import com.coppel.exceptions.NotFoundException;
 import com.coppel.services.impl.EmpleadoService;
 import jakarta.validation.Valid;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,19 +29,18 @@ public class EmpleadoService {
 
     public List<Empleado> getAllEmpleados() {
         log.info("Buscando empleados");
-        List<Empleado> empleados = empleadoRepository.findAll();
-        return empleados;
+
+        return empleadoRepository.findAll();
     }
 
     public Page<Empleado> getAllEmpleadosPageable(Pageable pageable) {
         log.info("Buscando empleados");
-        Page<Empleado> empleados = empleadoRepository.findAll(pageable);
-        return empleados;
+
+        return empleadoRepository.findAll(pageable);
     }
 
     public Empleado create(Empleado empleado) throws Exception {
         try {
-            Empleado empleado1 = empleadoRepository.save(empleado);
             if (empleado == null) {
                 throw new IncorrectBodyException("El empleado no se pudo registrar correctamente");
             }
@@ -53,7 +51,7 @@ public class EmpleadoService {
         } catch (Exception ex) {
             throw new Exception();
         }
-        return empleado;
+        return empleadoRepository.save(empleado);
     }
 
     public Optional<Empleado> deleteEmpleado(Long id) throws Exception {

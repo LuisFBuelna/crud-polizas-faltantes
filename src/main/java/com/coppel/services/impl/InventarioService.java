@@ -1,7 +1,5 @@
 package com.coppel.services.impl;
 
-import com.coppel.controllers.EmpleadoController;
-import com.coppel.entities.Empleado;
 import com.coppel.entities.Inventario;
 import com.coppel.exceptions.IncorrectBodyException;
 import com.coppel.exceptions.NotFoundException;
@@ -14,16 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class InventarioService {
 
-    private static final Logger log = LoggerFactory.getLogger(EmpleadoService.class);
+    private static final Logger log = LoggerFactory.getLogger(InventarioService.class);
 
     @Autowired
     private InventarioRepository inventarioRepository;
@@ -53,14 +48,14 @@ public class InventarioService {
 
     public List<Inventario> getAllInventario() {
         log.info("Buscando todo el inventario");
-        List<Inventario> inventarios = inventarioRepository.findAll();
-        return inventarios;
+
+        return inventarioRepository.findAll();
     }
 
     public Page<Inventario> listarTodoElInventarioPageable(Pageable pageable) {
         log.info("Buscando todo el inventario");
-        Page<Inventario> inventarios = inventarioRepository.findAll(pageable);
-        return inventarios;
+
+        return inventarioRepository.findAll(pageable);
     }
 
     public Optional<Inventario> deleteInventario(Long id) {
